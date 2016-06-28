@@ -1,2 +1,8 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^notes$
+^\\doc\\$
+^cran-comments\.md$
+^\.travis\.yml$
+^readme\.md$
+
