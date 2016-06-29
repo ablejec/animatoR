@@ -15,14 +15,14 @@ tsegments(x0, y0, x1, y1, t, when, fixed = 0, ...)
 
 \item{y1}{numeric vector, end y coordinates.}
 
-\item{t}{numeric, homotopy parameter, limited between 0 and 1. 
-This parameter can be considered as fraction of time 
+\item{t}{numeric, homotopy parameter, limited between 0 and 1.
+This parameter can be considered as fraction of time
 duration of the animation.}
 
 \item{when}{numeric vector. This parameter controls
 the times of: entrance, exit, start of movement and, end of movement.}
 
-\item{fixed}{numeric, which location is fixed: 
+\item{fixed}{numeric, which location is fixed:
 start (0, default) - draw from \code{(x0,y0)} to \code{(x1,y1)},
 or end (1) - reverse.}
 

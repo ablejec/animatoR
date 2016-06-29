@@ -12,8 +12,8 @@
 
 \item{y1}{numeric vector, end y coordinates.}
 
-\item{t}{numeric, homotopy parameter, limited between 0 and 1. 
-This parameter can be considered as fraction of time 
+\item{t}{numeric, homotopy parameter, limited between 0 and 1.
+This parameter can be considered as fraction of time
 duration of the animation.}
 
 \item{when}{numeric vector. This parameter controls

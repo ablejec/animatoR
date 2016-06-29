@@ -30,15 +30,15 @@ NULL
 
 ## ----common--------------------------------------------------------------
 #' Common arguments
-#' 
+#'
 #' The core arguments for animatoR plotting functions
 #'
 #' @param x0 numeric vector, start x coordinates.
 #' @param y0 numeric vector, start y coordinates.
 #' @param x1 numeric vector, end x coordinates.
 #' @param y1 numeric vector, end y coordinates.
-#' @param t numeric, homotopy parameter, limited between 0 and 1. 
-#' This parameter can be considered as fraction of time 
+#' @param t numeric, homotopy parameter, limited between 0 and 1.
+#' This parameter can be considered as fraction of time
 #' duration of the animation.
 #' @param when  numeric vector. This parameter controls
 #' the times of: entrance, exit, start of movement and, end of movement.
@@ -171,12 +171,12 @@ tpoints <-
 function(x0, y0, x1=x0, y1=y0, t, when=c(0,1), trace=FALSE, trace.col="grey",...) {
 # print(sys.nframe())
 # print(ls(envir=sys.frame(-1)))
-if(missing(t)) t <- get("t",envir=sys.frame(-1))
 X <- cbind(x0,y0,x1,y1)
 x0 <- X[,1]
 y0 <- X[,2]
 x1 <- X[,3]
 y1 <- X[,4]
+if(missing(t)) t <- get("t",envir=sys.frame(-1))
 #
 xt <- h(x0, x1, t, when)
 yt <- h(y0, y1, t, when)
@@ -198,7 +198,7 @@ for(i in 1:length(tcols)) assign(tcolnames[i],tcols[i])
 ## ----fct trgb------------------------------------------------------------
 #
 trgb <- function(x0, x1=x0, t, when=c(0,1), alpha0=1, alpha1=1,...){
-    if(missing(t)) t <- get("t",envir=sys.frame(-1))
+if(missing(t)) t <- get("t",envir=sys.frame(-1))
     if(is.character(x0)) x0 <- col2rgb(x0)
     if(is.character(x1)) x1 <- col2rgb(x1)
     x1 <- h(x0/255,x1/255,t,when)
@@ -248,8 +248,8 @@ x0 <- X[,1]
 y0 <- X[,2]
 x1 <- X[,3]
 y1 <- X[,4]
-#
 if(missing(t)) t <- get("t",envir=sys.frame(-1))
+#
 #    for(t in seq(t0,t1,dt)) {
 #    if(!add) newplot(axes=FALSE)
     xt <- h(x0, x1, t,when)
@@ -264,7 +264,7 @@ if(missing(t)) t <- get("t",envir=sys.frame(-1))
 #' Draw lines from start to end location
 #'
 #' @inheritParams commonParams
-#' @param fixed numeric, which location is fixed: 
+#' @param fixed numeric, which location is fixed:
 #' start (0, default) - draw from \code{(x0,y0)} to \code{(x1,y1)},
 #' or end (1) - reverse.
 #' @param ... other parameters passed to \code{\link{lines}}.
@@ -303,8 +303,7 @@ x0 <- X[,1]
 y0 <- X[,2]
 x1 <- X[,3]
 y1 <- X[,4]
-#
-    if(missing(t)) t <- get("t",envir=sys.frame(-1))
+if(missing(t)) t <- get("t",envir=sys.frame(-1))
     if(fixed) t <- 1-t
     xt <- h(x0, x1, t,when)
     yt <- h(y0, y1, t,when)
@@ -323,8 +322,7 @@ x0 <- X[,1]
 y0 <- X[,2]
 x1 <- X[,3]
 y1 <- X[,4]
-#
-    if(missing(t)) t <- get("t",envir=sys.frame(-1))
+if(missing(t)) t <- get("t",envir=sys.frame(-1))
     switch(fixed,
     segments(x0,h(y0, y1, t,when),x1, h(y0, y1, t,when),...),
     segments(h(x0, x1, t, when), h(y0, y1, t, when),x1,y1,...))
@@ -333,13 +331,12 @@ y1 <- X[,4]
 ## ----fct tarrows---------------------------------------------------------
 tarrows <-
 function(x0, y0, x1, y1, t, when, fixed=1, length=0.125, ...) {
-    X <- cbind(x0,y0,x1,y1)
-    x0 <- X[,1]
-    y0 <- X[,2]
-    x1 <- X[,3]
-    y1 <- X[,4]
-    #
-    if(missing(t)) t <- get("t",envir=sys.frame(-1))
+X <- cbind(x0,y0,x1,y1)
+x0 <- X[,1]
+y0 <- X[,2]
+x1 <- X[,3]
+y1 <- X[,4]
+if(missing(t)) t <- get("t",envir=sys.frame(-1))
     switch(fixed,
     arrows(x0,y0,h(x0, x1, t,when), h(y0, y1, t,when),length=length,...),
     arrows(h(x0, x1, t,when), h(y0, y1, t,when),x1,y1,length=length,...))
@@ -349,13 +346,12 @@ function(x0, y0, x1, y1, t, when, fixed=1, length=0.125, ...) {
 ## ----fct tpolygon--------------------------------------------------------
 tpolygon <-
 function(x0, y0, x1, y1, t,when,...) {
-    X <- cbind(x0,y0,x1,y1)
-    x0 <- X[,1]
-    y0 <- X[,2]
-    x1 <- X[,3]
-    y1 <- X[,4]
-    #
-    if(missing(t)) t <- get("t",envir=sys.frame(-1))
+X <- cbind(x0,y0,x1,y1)
+x0 <- X[,1]
+y0 <- X[,2]
+x1 <- X[,3]
+y1 <- X[,4]
+if(missing(t)) t <- get("t",envir=sys.frame(-1))
     polygon(h(x0, x1, t,when), h(y0, y1, t,when),...)
 
 }
@@ -363,7 +359,7 @@ function(x0, y0, x1, y1, t,when,...) {
 ## ----fct trect-----------------------------------------------------------
 trect <- function(xleft0, ybottom0, xright0, ytop0,
                  xleft1, ybottom1, xright1, ytop1, t, when, ...){
-    if(missing(t)) t <- get("t",envir=sys.frame(-1))
+if(missing(t)) t <- get("t",envir=sys.frame(-1))
 rect(h(xleft0,xleft1,t, when), h(ybottom0,ybottom1,t,when),
 h(xright0,xright1,t,when),h(ytop0,ytop1,t,when),...)
 }
@@ -372,15 +368,14 @@ h(xright0,xright1,t,when),h(ytop0,ytop1,t,when),...)
 # homotopy change of cex
 # set size po maintain proportional areas
 tcex <- function(cex0=1, cex1=1, t, when, ...){
-    if(missing(t)) t <- get("t",envir=sys.frame(-1))
+if(missing(t)) t <- get("t",envir=sys.frame(-1))
     sqrt(h(cex0,cex1,t,when))
 }
 
 ## ----fct ttext-----------------------------------------------------------
 #
 ttext <- function(x0, y0, x1=x0, y1=y0, t, when, text="",...){
-
-    if(missing(t)) t <- get("t",envir=sys.frame(-1))
+if(missing(t)) t <- get("t",envir=sys.frame(-1))
     text(h(x0,x1,t,when),h(y0,y1,t,when),text,...)
 }
 
@@ -388,7 +383,7 @@ ttext <- function(x0, y0, x1=x0, y1=y0, t, when, text="",...){
 # homotopy change of matrix
 # set size po maintain proportional areas
 tmatrix <- function(X1, X0=diag(nrow(X1)), t, when, ...){
-    if(missing(t)) t <- get("t",envir=sys.frame(-1))
+if(missing(t)) t <- get("t",envir=sys.frame(-1))
     h(X0,X1,t,when)
 }
 
@@ -398,7 +393,7 @@ if(lambda!=0) return((x^lambda-1) / lambda) else return(log(x,base))
 }
 # homotopy change of parameter lambda in boxcox transform
 tBoxCox <- function(x,lambda0,lambda1=lambda0, t, when ,base=exp(1), ...){
-   if(missing(t)) t <- get("t",envir=sys.frame(-1))
+if(missing(t)) t <- get("t",envir=sys.frame(-1))
    BoxCox(x,h(lambda0,lambda1,t,when=when),base=base)
 }
 #
