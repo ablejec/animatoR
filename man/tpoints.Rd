@@ -4,8 +4,8 @@
 \alias{tpoints}
 \title{Move points}
 \usage{
-tpoints(x0, y0, x1 = x0, y1 = y0, t, when = c(0, 1), trace = FALSE,
-  trace.col = "grey", ...)
+tpoints(x0, y0, x1 = x0, y1 = y0, t, when = c(0, 1), p = 1,
+  trace = FALSE, trace.col = "grey", ...)
 }
 \arguments{
 \item{x0}{numeric vector, start x coordinates.}
@@ -22,6 +22,8 @@ duration of the animation.}
 
 \item{when}{numeric vector. This parameter controls
 the times of: entrance, exit, start of movement and, end of movement.}
+
+\item{p}{numeric, homotopy power parameter. Defaults to 1.}
 
 \item{trace}{logical. Should movement leave a trace?}
 

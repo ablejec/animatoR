@@ -7,19 +7,24 @@
 h(x0, x1, t, when, p = 1)
 }
 \arguments{
-\item{x0}{numeric vector of start coordinates}
+\item{x0}{numeric vector of start values.}
 
-\item{x1}{numeric vector of end coordinates}
+\item{x1}{numeric vector of end values.}
 
-\item{t}{numeric, homotopy parameter (between 0 and 1)}
+\item{t}{numeric, homotopy parameter, limited between 0 and 1.
+This parameter can be considered as fraction of time
+duration of the animation.}
 
-\item{p}{numeric, power parameter (default=1)}
+\item{when}{numeric vector. This parameter controls
+the times of: entrance, exit, start of movement and, end of movement.}
+
+\item{p}{numeric, homotopy power parameter. Defaults to 1.}
 }
 \value{
-interpolated value (see note)
+interpolated value (see Note)
 }
 \description{
-Interpolates a position between start and end coordinate.
+Interpolates a position between start and end value(s).
 Homotopy controled by a homotopy parameter \code{t} and power parameter \code{p} is used for interpolation.
 }
 \note{

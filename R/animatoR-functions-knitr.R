@@ -28,22 +28,46 @@ animator <- function(...){ warning("animator function not yet defined\n")}
 #' @name animatoR
 NULL
 
-## ----common--------------------------------------------------------------
-#' Common arguments
+## ----t params------------------------------------------------------------
+#' Argument t
 #'
-#' The core arguments for animatoR plotting functions
+#' Homotopy argument
+#'
+#' @param t numeric, homotopy parameter, limited between 0 and 1.
+#' This parameter can be considered as fraction of time
+#' duration of the animation.
+#' @name tParams
+NULL
+
+## ----when params---------------------------------------------------------
+#' Argument when
+#'
+#' Description of argument when
+#'
+#' @param when  numeric vector. This parameter controls
+#' the times of: entrance, exit, start of movement and, end of movement.
+#' @name whenParams
+NULL
+
+## ----p params------------------------------------------------------------
+#' Argument p
+#'
+#' Power of homotopy
+#'
+#' @param p numeric, homotopy power parameter. Defaults to 1.
+#' @name pParams
+NULL
+
+## ----coord params--------------------------------------------------------
+#' Coordinate arguments
+#'
+#' The core coordinate arguments for animatoR plotting functions
 #'
 #' @param x0 numeric vector, start x coordinates.
 #' @param y0 numeric vector, start y coordinates.
 #' @param x1 numeric vector, end x coordinates.
 #' @param y1 numeric vector, end y coordinates.
-#' @param t numeric, homotopy parameter, limited between 0 and 1.
-#' This parameter can be considered as fraction of time
-#' duration of the animation.
-#' @param when  numeric vector. This parameter controls
-#' the times of: entrance, exit, start of movement and, end of movement.
-#' @param p numeric, homotopy power parameter. Defaults to 1.
-#' @name commonParams
+#' @name coordParams
 NULL
 
 ## ----fct newplot---------------------------------------------------------
@@ -58,9 +82,12 @@ NULL
 #' @param axes see \code{\link{plot}}
 #' @param type see \code{\link{plot}}
 #' @param asp aspect ratio, default y/x = 1 see \code{\link{plot.new}}
+#' @param stamp logical, should time be visible on plots.
 #' @param ... see \code{\link{plot}}
 #' @return NULL
 #' @export
+#' @import graphics
+#' @import grDevices
 #' @seealso \code{\link{plot}}
 #' @keywords  dynamic, hplot
 #' @author Andrej Blejec \email{andrej.blejec@nib.si}
@@ -80,14 +107,15 @@ round(get("t",envir=sys.frame(-1)),2)),adj=0,xpd=TRUE)
 ## ------------------------------------------------------------------------
 #' Homotopy Function
 #'
-#' Interpolates a position between start and end coordinate.
+#' Interpolates a position between start and end value(s).
 #' Homotopy controled by a homotopy parameter \code{t} and power parameter \code{p} is used for interpolation.
 #'
-#' @param x0 numeric vector of start coordinates
-#' @param x1 numeric vector of end coordinates
-#' @param t numeric, homotopy parameter (between 0 and 1)
-#' @param p numeric, power parameter (default=1)
-#' @return interpolated value (see note)
+#' @param x0 numeric vector of start values.
+#' @param x1 numeric vector of end values.
+#' @inheritParams tParams
+#' @inheritParams whenParams
+#' @inheritParams pParams
+#' @return interpolated value (see Note)
 #' @export
 #' @note Returned coordinates are determined using the homotopy function
 #'   \deqn{x_t=x_0  (1-t^p)+x_1 t^p,  t\in[0,1]}.
@@ -140,12 +168,26 @@ par(oldpar)
 }
 
 
+## ------------------------------------------------------------------------
+checkX <- function(...){
+X <- cbind(x0,y0,x1,y1)
+x0 <- X[,1]
+y0 <- X[,2]
+x1 <- X[,3]
+y1 <- X[,4]
+cat("from checkX\n")
+print(X)
+}
+
 ## ----fct tpoints---------------------------------------------------------
 #' Move points
 #'
 #' Move points from start to end location
 #'
-#' @inheritParams commonParams
+#' @inheritParams coordParams
+#' @inheritParams tParams
+#' @inheritParams whenParams
+#' @inheritParams pParams
 #' @param trace logical. Should movement leave a trace?
 #' @param trace.col color of the trace.
 #' @param ... other parameters passed to \code{\link{points}}.
@@ -168,7 +210,7 @@ par(oldpar)
 #' tpoints(x0,y0,x1,y1,t,trace=TRUE)
 #' }
 tpoints <-
-function(x0, y0, x1=x0, y1=y0, t, when=c(0,1), trace=FALSE, trace.col="grey",...) {
+function(x0, y0, x1=x0, y1=y0, t, when=c(0,1), p=1, trace=FALSE, trace.col="grey",...) {
 # print(sys.nframe())
 # print(ls(envir=sys.frame(-1)))
 X <- cbind(x0,y0,x1,y1)
@@ -178,8 +220,8 @@ x1 <- X[,3]
 y1 <- X[,4]
 if(missing(t)) t <- get("t",envir=sys.frame(-1))
 #
-xt <- h(x0, x1, t, when)
-yt <- h(y0, y1, t, when)
+xt <- h(x0, x1, t, when,p=p)
+yt <- h(y0, y1, t, when,p=p)
 if(trace)
 segments(x0,y0,xt,yt ,col=trace.col)
     points(xt, yt,...)
@@ -187,27 +229,111 @@ segments(x0,y0,xt,yt ,col=trace.col)
 }
 
 ## ----tcols---------------------------------------------------------------
-makeTransparent <- function(x, alpha=0){
-if(is.character(x)) x <- col2rgb(x)/255
-rgb(x[1],x[2],x[3],alpha)
+#' Make Transparent Colors
+#'
+#' Add transparency parameter (alpha) to colors
+#'
+#' @param x vector specifying colors or factor.
+#' Colors can be specified as numbers or
+#' character strings, see \code{\link{colors}}.
+#' Factors are also acceptable
+#' in which case the input will be transformed into level numbers.
+#' @param alpha numeric, transparency value \code{\link{rgb}}.
+#' @return A character vector with elements of 7 or 9 characters, "#"
+#' followed by the red, blue, green and optionally alpha
+#' values in hexadecimal (after rescaling to 0 ... 255).
+#' The optional alpha values range from 0
+#' (fully transparent) to 255 (opaque).
+#' @export
+#' @seealso \code{\link[grDevices]{rgb}} for setting colors and
+#'  \code{\link[grDevices]{colors}} for color names.
+#' @keywords dynamic, aplot
+#' @author Andrej Blejec \email{andrej.blejec@nib.si}
+#' @examples
+#' # Transparent red
+#' makeTransparent("red",0.5)
+#' # Same thing
+#' makeTransparent(2,0.5)
+#' # Vector of names
+#' makeTransparent(c("red","orange"),0.75)
+#' # Vector of color numbers
+#' makeTransparent(1:5)
+#' # Factor levels can be used as color indicator
+#' makeTransparent(factor(c("S","M","H","S")))
+#' # Different transparency
+#' makeTransparent(1:5,alpha=1:5)
+#' #
+#' # Define transparent version of base colors
+#' #
+#' trcols<-makeTransparent(c(1:8,0.1),alpha=0.75)
+#' trcols <- data.frame(t(trcols),stringsAsFactors=FALSE)
+#' names(trcols) <-
+#' paste("tr",c("black","red","green","blue",
+#' "cyan","magenta","yellow","grey","white"),sep="")
+#' str(trcols)
+#' attach(trcols)
+#' trred
+#' trgreen
+#' detach()
+#' # Plot colors
+#' if(interactive()){
+#' par(xpd=TRUE)
+#' newplot(stamp=FALSE)
+#' points(1:9,1:9,bg=unlist(trcols),col="grey",pch=21,cex=15)
+#' text((1:9)+1.1,(1:9)-0.7,names(trcols),adj=0)
+#' }
+#'
+makeTransparent <- function(x, alpha=0.5){
+if(is.factor(x)) x <- as.numeric(x)
+if(max(alpha,na.rm=TRUE) > 1) alpha <- alpha/max(alpha,na.rm=TRUE)
+y <- rbind(col2rgb(x)/255,alpha=alpha)
+apply(y,2,function(x) rgb(x[1],x[2],x[3],x[4]))
 }
-tcols<-apply(col2rgb(c(1:8,0.1))/255,2,makeTransparent,alpha=0.75)
-tcolnames <- paste("t",c("black","red","green","blue","cyan","magenta","yellow","grey","white"),sep="")
-for(i in 1:length(tcols)) assign(tcolnames[i],tcols[i])
 
 ## ----fct trgb------------------------------------------------------------
+#' Interpolate Colors
+#'
+#' This function interpolates the color between start and end color.
+#'
+#' @param x0 numeric or character vector specifying start color,
+#' see \code{\link[grDevices]{colors}}.
+#' @param x1 numeric or character vector specifying end color,
+#' see \code{\link[grDevices]{colors}}.
+#' @inheritParams tParams
+#' @inheritParams whenParams
+#' @inheritParams pParams
+#' @param alpha0,alpha1 numeric, transparency value
+#' \code{\link[grDevices]{rgb}}.
+#' @param ... additional parameters passed to \code{\link[grDevices]{rgb}}.
+#' @return A character vector with elements of 7 or 9 characters, "#"
+#' followed by the red, blue, green and optionally alpha
+#' values in hexadecimal (after rescaling to 0 ... 255).
+#' The optional alpha values range from 0
+#' (fully transparent) to 255 (opaque).
+#' @export
+#' @seealso \code{\link[grDevices]{rgb}} for setting colors and
+#'  \code{\link[grDevices]{colors}} for color names.
+#' @keywords dynamic, aplot
+#' @author Andrej Blejec \email{andrej.blejec@nib.si}
+#' @examples
+#' if(interactive()){
+#' animator('
+#' newplot()
+#' points(5,5,col=trgb("yellow","blue",t,alpha1=1),
+#' pch=16,cex=tcex(0,20,t),life=0.5)
+#' ')
+#' }
 #
-trgb <- function(x0, x1=x0, t, when=c(0,1), alpha0=1, alpha1=1,...){
+trgb <- function(x0, x1=x0, t, when=c(0,1), p =1, alpha0=1, alpha1=1,...){
 if(missing(t)) t <- get("t",envir=sys.frame(-1))
     if(is.character(x0)) x0 <- col2rgb(x0)
     if(is.character(x1)) x1 <- col2rgb(x1)
-    x1 <- h(x0/255,x1/255,t,when)
-    alpha <- h(alpha0,alpha1,t,when)
+    xt <- h(x0/255,x1/255,t,when,p=p)
+    alpha <- h(alpha0,alpha1,t,when,p=p)
 #    cat(x1,t,when,"\n")
 #    print(str(x1))
-    invisible(rgb(x1[1],x1[2],x1[3],alpha,...))
+    invisible(rgb(xt[1],xt[2],xt[3],alpha,...))
 }
-
 if(interactive()){
 animator('
 newplot()
@@ -220,7 +346,10 @@ points(5,5,col=trgb("yellow","blue",t,alpha1=1),pch=16,cex=tcex(0,20,t),life=0.5
 #'
 #' Move lines from start to end location
 #'
-#' @inheritParams commonParams
+#' @inheritParams coordParams
+#' @inheritParams tParams
+#' @inheritParams whenParams
+#' @inheritParams pParams
 #' @param ... other parameters passed to \code{\link{lines}}.
 #' @return List with numerical components \code{x} and \code{y} with
 #' current position
@@ -233,15 +362,19 @@ points(5,5,col=trgb("yellow","blue",t,alpha1=1),pch=16,cex=tcex(0,20,t),life=0.5
 #' y0 <- c(0,10,0)
 #' x1 <- c(10,5,0)
 #' y1 <- c(10,0,10)
-#' print(tlines(x0,y0,x1,y1,0.5))
+#' newplot()
+#' pos <- tlines(x0,y0,x1,y1,0.25)
+#' points(pos)
 #' #############
 #' par(mfrow=c(2,2))
 #' for( t in seq(0,1,1/3)) {
 #' newplot()
 #' tlines(x0,y0,x1,y1,t)
+#' points(x0,y0,pch="0")
+#' points(x1,y1,pch="1")
 #' }
 tlines <-
-function(x0, y0, x1, y1, t, when, ...) {
+function(x0, y0, x1, y1, t, p=1, when, ...) {
 #function(x0, y0, x1, y1, t0=0, t1=t0, t, when,dt=.dt,...) {
 X <- cbind(x0,y0,x1,y1)
 x0 <- X[,1]
@@ -252,26 +385,215 @@ if(missing(t)) t <- get("t",envir=sys.frame(-1))
 #
 #    for(t in seq(t0,t1,dt)) {
 #    if(!add) newplot(axes=FALSE)
-    xt <- h(x0, x1, t,when)
-    yt <- h(y0, y1, t,when)
+    xt <- h(x0, x1, t,when,p=p)
+    yt <- h(y0, y1, t,when,p=p)
     lines(xt, yt ,...)
     invisible(list(x=xt,y=yt))
 }
 
-## ----fct tsegments-------------------------------------------------------
-#' Draw segments
+## ----fct dsegments-------------------------------------------------------
+#' Draw Segments
 #'
-#' Draw lines from start to end location
+#' Draw segments from (x0,y0) to (x1,y1). The effect is
+#' like starting from a point and draw a line.
 #'
-#' @inheritParams commonParams
-#' @param fixed numeric, which location is fixed:
-#' start (0, default) - draw from \code{(x0,y0)} to \code{(x1,y1)},
-#' or end (1) - reverse.
-#' @param ... other parameters passed to \code{\link{lines}}.
+#' @inheritParams coordParams
+#' @inheritParams tParams
+#' @inheritParams whenParams
+#' @inheritParams pParams
+#' @param ... other parameters passed to \code{\link{segments}}.
 #' @return List with numerical components \code{x} and \code{y} with
 #' current position
 #' @export
-#' @seealso \code{\link[graphics]{lines}}
+#' @seealso \code{\link[graphics]{segments}}
+#' @keywords graphics
+#' @author Andrej Blejec \email{andrej.blejec@nib.si}
+#' @examples
+#' x0 <- c(0,5,10)
+#' y0 <- c(0,10,0)
+#' x1 <- c(10,5,0)
+#' y1 <- c(10,0,10)
+#' newplot()
+#' pos <- dsegments(x0,y0,x1,y1,0.25)
+#' points(pos)
+#' ## Lines from 0 to 1
+#' par(mfrow=c(2,2))
+#' for( t in seq(0,1,1/3)) {
+#' newplot()
+#' dsegments(x0,y0,x1,y1,t)
+#' points(x0,y0,pch="0")
+#' points(x1,y1,pch="1")
+#' }
+#' ## Reverse: from 1 to 0
+#' par(mfrow=c(2,2))
+#' for( t in seq(0,1,1/3)) {
+#' newplot()
+#' dsegments(x1,y1,x0,y0,t)
+#' points(x0,y0,pch="0")
+#' points(x1,y1,pch="1")
+#' }
+dsegments <-
+function(x0, y0, x1, y1, t, when, p=1,  ...) {
+X <- cbind(x0,y0,x1,y1)
+x0 <- X[,1]
+y0 <- X[,2]
+x1 <- X[,3]
+y1 <- X[,4]
+if(missing(t)) t <- get("t",envir=sys.frame(-1))
+    xt <- h(x0, x1, t,when,p)
+    yt <- h(y0, y1, t,when,p)
+#
+    segments(x0, y0, xt, yt,...)
+    invisible(list(x=xt,y=yt))
+}
+
+## ----fct tsegments-------------------------------------------------------
+#' Move Segments
+#'
+#' Change segment defining positions and plot subsequent segments.
+#' Lines are "floating" to final positions.
+#'
+#' @inheritParams coordParams
+#' @inheritParams tParams
+#' @inheritParams whenParams
+#' @inheritParams pParams
+#' @param fixed numeric, which location is fixed:
+#' start (0, default) - draw from \code{(x0,y0)} to \code{(x1,y1)},
+#' or end (1) - reverse.
+#' @param ... other parameters passed to \code{\link{segments}}.
+#' @return Numerical matrix with colums defining the current segments.
+#' @export
+#' @seealso \code{\link[graphics]{segments}}
+#' @keywords graphics
+#' @author Andrej Blejec \email{andrej.blejec@nib.si}
+#' @examples
+#' x0 <- c(0,4,7)
+#' y0 <- c(0,7,0)
+#' x1 <- c(4,0,7)
+#' y1 <- c(4,7,5)
+#' x2 <- c(0,4,7)+2
+#' y2 <- c(0,7,0)-2
+#' x3 <- c(4,0,7)+2
+#' y3 <- c(4,7,5)-2
+#' newplot()
+#' arrows(x0,y0,x1,y1,lty=2)
+#' arrows(x2,y2,x3,y3,lty=2)
+#' pos <- tsegments(x0,y0,x1,y1,x2,y2,x3,y3,0.75)
+#' pos
+#' points(pos$start)
+#' points(pos$end)
+#' points(x0,y0,pch="0")
+#' points(x1,y1,pch="1")
+#' points(x2,y2,pch="2")
+#' points(x3,y3,pch="3")
+tsegments <-
+function(x0, y0, x1, y1, x2=x0, y2=y0, x3=x1, y3=y1, t, when, p=1, fixed=0, ...) {
+X <- cbind(x0, y0, x1, y1, x2, y2, x3, y3)
+if(missing(t)) t <- get("t",envir=sys.frame(-1))
+    xt0 <- h(X[,1], X[,3], t,when,p)
+    yt0 <- h(X[,2], X[,4], t,when,p)
+    xt1 <- h(X[,5], X[,7], t,when,p)
+    yt1 <- h(X[,6], X[,8], t,when,p)
+#
+    segments(xt0, yt0, xt1, yt1,...)
+    invisible(list(start=list(x=xt0,y=yt0),
+    end=list(x=xt1,y=yt1)))
+}
+
+## ----fct tsegments2------------------------------------------------------
+thline <-
+function(x0, y0, x1, y1, t, when, fixed=1, ...) {
+X <- cbind(x0,y0,x1,y1)
+x0 <- X[,1]
+y0 <- X[,2]
+x1 <- X[,3]
+y1 <- X[,4]
+if(missing(t)) t <- get("t",envir=sys.frame(-1))
+    switch(fixed,
+    segments(x0,h(y0, y1, t,when),x1, h(y0, y1, t,when),...),
+    segments(h(x0, x1, t, when), h(y0, y1, t, when),x1,y1,...))
+}
+
+## ----fct darrows---------------------------------------------------------
+#' Draw Arrows
+#'
+#' Draw arrows from start to end location
+#'
+#' @inheritParams coordParams
+#' @inheritParams tParams
+#' @inheritParams whenParams
+#' @inheritParams pParams
+#' @param length length of the edges of the arrow head (in inches).
+#' @param ... other parameters passed to \code{\link{arrows}}.
+#' @return List with numerical components \code{x} and \code{y} with
+#' current position
+#' @export
+#' @seealso \code{\link[graphics]{arrows}}
+#' @keywords graphics
+#' @author Andrej Blejec \email{andrej.blejec@nib.si}
+#' @examples
+#' x0 <- c(0,5,10)
+#' y0 <- c(0,10,0)
+#' x1 <- c(10,5,0)
+#' y1 <- c(10,0,10)
+#' newplot()
+#' pos <- darrows(x0,y0,x1,y1,0.25)
+#' points(pos)
+#' points(x0,y0,pch="0")
+#' points(x1,y1,pch="1")
+#' #############
+#' if(interactive()){
+#' par(mfrow=c(2,2))
+#' for( t in seq(0,1,1/3)) {
+#' newplot()
+#' darrows(x0,y0,x1,y1,t)
+#' points(x0,y0,pch="0")
+#' points(x1,y1,pch="1")
+#' }
+#' }
+#' #############
+#' if(interactive()){
+#' par(mfrow=c(2,2))
+#' for( t in seq(0,1,1/3)) {
+#' newplot()
+#' darrows(x1,y1,x0,y0,t)
+#' points(x0,y0,pch="0")
+#' points(x1,y1,pch="1")
+#' }
+#' }
+#
+darrows <-
+function(x0, y0, x1, y1, t, when,p=1, length=0.125, ...) {
+X <- cbind(x0,y0,x1,y1)
+x0 <- X[,1]
+y0 <- X[,2]
+x1 <- X[,3]
+y1 <- X[,4]
+if(missing(t)) t <- get("t",envir=sys.frame(-1))
+    xt <- h(x0, x1, t,when,p)
+    yt <- h(y0, y1, t,when,p)
+    arrows(x0,y0,xt,yt,length=length,...)
+    invisible(list(x=xt,y=yt))
+}
+
+## ----fct tarrows---------------------------------------------------------
+#' Draw Arrows
+#'
+#' Draw arrows from start to end location
+#'
+#' @inheritParams coordParams
+#' @inheritParams tParams
+#' @inheritParams whenParams
+#' @inheritParams pParams
+#' @param fixed numeric, which location is fixed:
+#' start (0, default) - draw from \code{(x0,y0)} to \code{(x1,y1)},
+#' or end (1) - reverse.
+#' @param length length of the edges of the arrow head (in inches).
+#' @param ... other parameters passed to \code{\link{arrows}}.
+#' @return List with numerical components \code{x} and \code{y} with
+#' current position
+#' @export
+#' @seealso \code{\link[graphics]{arrows}}
 #' @keywords graphics
 #' @author Andrej Blejec \email{andrej.blejec@nib.si}
 #' @examples
@@ -296,8 +618,8 @@ if(missing(t)) t <- get("t",envir=sys.frame(-1))
 #' points(x0,y0,pch="0")
 #' points(x1,y1,pch="1")
 #' }
-tsegments <-
-function(x0, y0, x1, y1, t, when, fixed=0, ...) {
+tarrows <-
+function(x0, y0, x1, y1, t, when,p=1, fixed=1, length=0.125, ...) {
 X <- cbind(x0,y0,x1,y1)
 x0 <- X[,1]
 y0 <- X[,2]
@@ -305,63 +627,115 @@ x1 <- X[,3]
 y1 <- X[,4]
 if(missing(t)) t <- get("t",envir=sys.frame(-1))
     if(fixed) t <- 1-t
-    xt <- h(x0, x1, t,when)
-    yt <- h(y0, y1, t,when)
-#
-    switch(fixed+1,
-    segments(x0, y0, xt, yt,...),
-    segments(xt, yt, x1, y1,...))
+    xt <- h(x0, x1, t,when,p)
+    yt <- h(y0, y1, t,when,p)
+    switch(fixed,
+    arrows(x0,y0,xt,yt,length=length,...),
+    arrows(xt,yt,x1,y1,length=length,...))
     invisible(list(x=xt,y=yt))
 }
 
-## ----fct tsegments2------------------------------------------------------
-thline <-
-function(x0, y0, x1, y1, t, when, fixed=1, ...) {
-X <- cbind(x0,y0,x1,y1)
-x0 <- X[,1]
-y0 <- X[,2]
-x1 <- X[,3]
-y1 <- X[,4]
-if(missing(t)) t <- get("t",envir=sys.frame(-1))
-    switch(fixed,
-    segments(x0,h(y0, y1, t,when),x1, h(y0, y1, t,when),...),
-    segments(h(x0, x1, t, when), h(y0, y1, t, when),x1,y1,...))
-}
-
-## ----fct tarrows---------------------------------------------------------
-tarrows <-
-function(x0, y0, x1, y1, t, when, fixed=1, length=0.125, ...) {
-X <- cbind(x0,y0,x1,y1)
-x0 <- X[,1]
-y0 <- X[,2]
-x1 <- X[,3]
-y1 <- X[,4]
-if(missing(t)) t <- get("t",envir=sys.frame(-1))
-    switch(fixed,
-    arrows(x0,y0,h(x0, x1, t,when), h(y0, y1, t,when),length=length,...),
-    arrows(h(x0, x1, t,when), h(y0, y1, t,when),x1,y1,length=length,...))
-
-}
-
 ## ----fct tpolygon--------------------------------------------------------
+#' Move Polygon
+#'
+#' Move polygon from start to end location
+#'
+#' @inheritParams coordParams
+#' @inheritParams tParams
+#' @inheritParams whenParams
+#' @inheritParams pParams
+#' @param ... other parameters passed to \code{\link{polygon}}.
+#' @return List with numerical components \code{x} and \code{y} with
+#' current position
+#' @export
+#' @seealso \code{\link[graphics]{polygon}}
+#' @keywords dynamic, aplot
+#' @author Andrej Blejec \email{andrej.blejec@nib.si}
+#' @examples
+#' x0 <- c(0,5)
+#' y0 <- c(0,5)
+#' x1 <- c(1,10)
+#' y1 <- c(1,10)
+#' print(tpolygon(x0,y0,x1,y1,0.5))
+#' #############
+#' par(mfrow=c(2,2))
+#' for( t in seq(0,1,1/3)) {
+#' newplot()
+#' tpolygon(x0,y0,x1,y1,t)
+#' }
 tpolygon <-
-function(x0, y0, x1, y1, t,when,...) {
+function(x0, y0, x1, y1, t,when,p=1,...) {
 X <- cbind(x0,y0,x1,y1)
 x0 <- X[,1]
 y0 <- X[,2]
 x1 <- X[,3]
 y1 <- X[,4]
 if(missing(t)) t <- get("t",envir=sys.frame(-1))
-    polygon(h(x0, x1, t,when), h(y0, y1, t,when),...)
-
+    xt <- h(x0, x1, t,when,p)
+    yt <- h(y0, y1, t,when,p)
+    polygon(xt, yt,...)
+    invisible(list(x=xt,y=yt))
 }
 
 ## ----fct trect-----------------------------------------------------------
+#' Morf Rectangle
+#'
+#' Morf one rectangle to another
+#'
+#' @param  xleft0   a vector (or scalar) of left x positions.
+#' @param  ybottom0 a vector (or scalar) of bottom y positions.
+#' @param  xright0  a vector (or scalar) of right x positions.
+#' @param  ytop0    a vector (or scalar) of top y positions.
+#' @param  xleft1   a vector (or scalar) of left x positions.
+#' @param  ybottom1 a vector (or scalar) of bottom y positions.
+#' @param  xright1  a vector (or scalar) of right x positions.
+#' @param  ytop1    a vector (or scalar) of top y positions.
+#' @inheritParams tParams
+#' @inheritParams whenParams
+#' @inheritParams pParams
+#' @param ... other parameters passed to \code{\link{rect}}.
+#' @return List with numerical components \code{x} and \code{y} with
+#' current position
+#' @export
+#' @seealso \code{\link[graphics]{rect}}
+#' @keywords dynamic, aplot
+#' @author Andrej Blejec \email{andrej.blejec@nib.si}
+#' @examples
+#' xleft0   <- 1
+#' ybottom0 <- 1
+#' xright0  <- 5
+#' ytop0    <- 5
+#' xleft1   <- 3
+#' ybottom1 <- 3
+#' xright1  <- 6
+#' ytop1    <- 9
+#' newplot()
+#' rect( xleft0, ybottom0, xright0, ytop0,lty=2,border=2)
+#' rect( xleft1, ybottom1, xright1, ytop1,lty=2,border=4)              
+#' arrows(
+#' c(xleft0,xright0),c(ybottom0,ytop0),
+#' c(xleft1,xright1),c(ybottom1,ytop1),lty=2)
+#' ## Intermediate rectangle
+#' pos <- trect(xleft0, ybottom0, xright0, ytop0,
+#'                 xleft1, ybottom1, xright1, ytop1, t= 0.75)
+#' str(pos)
+#' #############
+#' par(mfrow=c(2,2))
+#' for( t in seq(0,1,1/3)) {
+#' newplot()
+#' tpolygon(x0,y0,x1,y1,t)
+#' }
 trect <- function(xleft0, ybottom0, xright0, ytop0,
-                 xleft1, ybottom1, xright1, ytop1, t, when, ...){
+                 xleft1, ybottom1, xright1, ytop1, t, p=1, when, ...){
 if(missing(t)) t <- get("t",envir=sys.frame(-1))
-rect(h(xleft0,xleft1,t, when), h(ybottom0,ybottom1,t,when),
-h(xright0,xright1,t,when),h(ytop0,ytop1,t,when),...)
+xleftt <- h(xleft0,xleft1,t, when,p)
+ybottomt <- h(ybottom0,ybottom1,t,when,p)
+xrightt <- h(xright0,xright1,t,when,p)
+ytopt <- h(ytop0,ytop1,t,when,p)
+rect(xleftt, ybottomt,
+xrightt,ytopt,...)
+invisible(list(xleft=xleftt,ybottom=ybottomt,
+xright=xrightt,ytop=ytopt))
 }
 
 ## ----fct tcex------------------------------------------------------------

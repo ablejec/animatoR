@@ -2,9 +2,10 @@
 % Please edit documentation in R/animatoR-functions-knitr.R
 \name{tsegments}
 \alias{tsegments}
-\title{Draw segments}
+\title{Move Segments}
 \usage{
-tsegments(x0, y0, x1, y1, t, when, fixed = 0, ...)
+tsegments(x0, y0, x1, y1, x2 = x0, y2 = y0, x3 = x1, y3 = y1, t, when,
+  p = 1, fixed = 0, ...)
 }
 \arguments{
 \item{x0}{numeric vector, start x coordinates.}
@@ -22,47 +23,47 @@ duration of the animation.}
 \item{when}{numeric vector. This parameter controls
 the times of: entrance, exit, start of movement and, end of movement.}
 
+\item{p}{numeric, homotopy power parameter. Defaults to 1.}
+
 \item{fixed}{numeric, which location is fixed:
 start (0, default) - draw from \code{(x0,y0)} to \code{(x1,y1)},
 or end (1) - reverse.}
 
-\item{...}{other parameters passed to \code{\link{lines}}.}
+\item{...}{other parameters passed to \code{\link{segments}}.}
 }
 \value{
-List with numerical components \code{x} and \code{y} with
-current position
+Numerical matrix with colums defining the current segments.
 }
 \description{
-Draw lines from start to end location
+Change segment defining positions and plot subsequent segments.
+Lines are "floating" to final positions.
 }
 \examples{
-x0 <- c(0,5,10)
-y0 <- c(0,10,0)
-x1 <- c(10,5,0)
-y1 <- c(10,0,10)
-print(tsegments(x0,y0,x1,y1,0.5))
-#############
-par(mfrow=c(2,2))
-for( t in seq(0,1,1/3)) {
+x0 <- c(0,4,7)
+y0 <- c(0,7,0)
+x1 <- c(4,0,7)
+y1 <- c(4,7,5)
+x2 <- c(0,4,7)+2
+y2 <- c(0,7,0)-2
+x3 <- c(4,0,7)+2
+y3 <- c(4,7,5)-2
 newplot()
-tsegments(x0,y0,x1,y1,t)
+arrows(x0,y0,x1,y1,lty=2)
+arrows(x2,y2,x3,y3,lty=2)
+pos <- tsegments(x0,y0,x1,y1,x2,y2,x3,y3,0.75)
+pos
+points(pos$start)
+points(pos$end)
 points(x0,y0,pch="0")
 points(x1,y1,pch="1")
-}
-#############
-par(mfrow=c(2,2))
-for( t in seq(0,1,1/3)) {
-newplot()
-tsegments(x0,y0,x1,y1,t,fixed=1)
-points(x0,y0,pch="0")
-points(x1,y1,pch="1")
-}
+points(x2,y2,pch="2")
+points(x3,y3,pch="3")
 }
 \author{
 Andrej Blejec \email{andrej.blejec@nib.si}
 }
 \seealso{
-\code{\link[graphics]{lines}}
+\code{\link[graphics]{segments}}
 }
 \keyword{graphics}
 

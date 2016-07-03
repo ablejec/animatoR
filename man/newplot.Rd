@@ -20,6 +20,8 @@ newplot(xlim = c(0, 10), ylim = c(0, 10), ann = FALSE, axes = FALSE,
 
 \item{asp}{aspect ratio, default y/x = 1 see \code{\link{plot.new}}}
 
+\item{stamp}{logical, should time be visible on plots.}
+
 \item{...}{see \code{\link{plot}}}
 }
 \description{
