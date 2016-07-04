@@ -711,7 +711,7 @@ if(missing(t)) t <- get("t",envir=sys.frame(-1))
 #' ytop1    <- 9
 #' newplot()
 #' rect( xleft0, ybottom0, xright0, ytop0,lty=2,border=2)
-#' rect( xleft1, ybottom1, xright1, ytop1,lty=2,border=4)              
+#' rect( xleft1, ybottom1, xright1, ytop1,lty=2,border=4)
 #' arrows(
 #' c(xleft0,xright0),c(ybottom0,ytop0),
 #' c(xleft1,xright1),c(ybottom1,ytop1),lty=2)
@@ -739,14 +739,101 @@ xright=xrightt,ytop=ytopt))
 }
 
 ## ----fct tcex------------------------------------------------------------
+#' Interpolate Symbol and Text Size
+#'
+#' This function interpolates the symbol size
+#' between the start and end size.
+#'
+#' @param x0 numeric vector specifying start symbol size,
+#' see \code{\link[graphics]{par} cex}.
+#' @param x1 numeric vector specifying end symbol size,
+#' see \code{\link[graphics]{par} cex}.
+#' @inheritParams tParams
+#' @inheritParams whenParams
+#' @inheritParams pParams
+#' @params area logical, if TRUE (default) sizes will be treated as
+#' area. If FALSE, sizes will be considered by diameter.
+#' @return A numeric vector giving the amount by which plotting text
+#' and symbols should be magnified relative to the default \code{cex} value.
+#' @export
+#' @seealso \code{\link[graphics]{par}} for setting symbol sizes.
+#' @keywords dynamic, aplot
+#' @author Andrej Blejec \email{andrej.blejec@nib.si}
+#' @examples
+#' if(interactive()){
+#' animator('
+#' newplot()
+#' points(3:7,3:7,col=1:5,
+#' pch=16,cex=tcex(0,20,t),life=0.5)
+#' ')
+#' }
+#' if(interactive()){
+#' # Doubling the symbol sizes
+#' newplot()
+#' text(2,8,"By edge:\n cex = c(8, 16)")
+#' points(2,5,cex=16,pch=0)
+#' points(2-0.75*par("cin")[2]*4,
+#' 5-0.75*par("cin")[2]*4,cex=8,pch=15, col="grey")
+#' text(8,8,"By size:\n cex = sqrt(c(4, 16, 64))")
+#' points(8,5,cex=sqrt(64*4),pch=0)
+#' points(8,5,cex=sqrt(16*4),pch=15, col="grey")
+#' points(8,5,cex=sqrt(4*4),pch=0)
+#' abline(v=c(2,8),h=5,col="red")
+#' }
+#
 # homotopy change of cex
 # set size po maintain proportional areas
-tcex <- function(cex0=1, cex1=1, t, when, ...){
+tcex <- function(cex0=1, cex1=1, t, when, p, area=TRUE){
 if(missing(t)) t <- get("t",envir=sys.frame(-1))
-    sqrt(h(cex0,cex1,t,when))
+    if(area) cext <- sqrt(h(cex0,cex1,t,when)) else
+    cext <- h(cex0,cex1,t,when,p)
+    invisible(cext)
 }
 
+
 ## ----fct ttext-----------------------------------------------------------
+#' Move Text
+#'
+#' Move text from start to end location
+#'
+#' @inheritParams coordParams
+#' @inheritParams tParams
+#' @inheritParams whenParams
+#' @inheritParams pParams
+#' @param text character vector, tect to display.
+#' @param ... other parameters passed to \code{\link{text}}.
+#' @return List with numerical components \code{x} and \code{y} with
+#' current position
+#' @export
+#' @seealso \code{\link[graphics]{text}}
+#' @keywords dynamic, aplot
+#' @author Andrej Blejec \email{andrej.blejec@nib.si}
+#' @examples
+#' x0 <- c(0,5)
+#' y0 <- c(0,5)
+#' x1 <- c(1,10)
+#' y1 <- c(1,10)
+#' print(tpoints(x0,y0,x1,y1,0.5))
+#' #############
+#' par(mfrow=c(2,2))
+#' for( t in seq(0,1,1/3)) {
+#' newplot()
+#' ttext(x0,y0,x1,y1,t,text=paste("Test text",t))
+#' }
+ttext <- function(x0, y0, x1=x0, y1=y0, t, when, p, text="",...){# print(sys.nframe())
+# print(ls(envir=sys.frame(-1)))
+X <- cbind(x0,y0,x1,y1)
+x0 <- X[,1]
+y0 <- X[,2]
+x1 <- X[,3]
+y1 <- X[,4]
+if(missing(t)) t <- get("t",envir=sys.frame(-1))
+#
+xt <- h(x0, x1, t, when,p=p)
+yt <- h(y0, y1, t, when,p=p)
+    text(xt, yt, text, ...)
+    invisible(list(x=xt,y=yt))
+}
 #
 ttext <- function(x0, y0, x1=x0, y1=y0, t, when, text="",...){
 if(missing(t)) t <- get("t",envir=sys.frame(-1))
@@ -754,25 +841,69 @@ if(missing(t)) t <- get("t",envir=sys.frame(-1))
 }
 
 ## ----fct tmatrix---------------------------------------------------------
+#' Interpolate Matrix
+#'
+#' Interpolates matrix elements between start and end value.
+#'
+#' @params X0 numerical matrix, start matrix
+#' @params X1 numerical matrix, end matrix
+#' @inheritParams tParams
+#' @inheritParams whenParams
+#' @inheritParams pParams
+#' @return Intermediate matrix (numerical).
+#' @export
+#' @author Andrej Blejec \email{andrej.blejec@nib.si}
+#' @examples
+#' X0 <- matrix(c(1,2,3,4),2,2)
+#' X1 <- matrix(c(11,12,13,14),2,2)                     
+#' print(X0)                                            
+#' print(X1)                                            
+#' print(h(X0,X1,t=0.3))                    
+#
 # homotopy change of matrix
 # set size po maintain proportional areas
-tmatrix <- function(X1, X0=diag(nrow(X1)), t, when, ...){
+# Warning: swapped arguments X0 and X1
+tmatrix <- function(X0, X1=diag(nrow(X0)), t, when, p){
 if(missing(t)) t <- get("t",envir=sys.frame(-1))
-    h(X0,X1,t,when)
+    invisible(h(X0,X1,t,when, p))
 }
 
 ## ----fct tBoxCox---------------------------------------------------------
-BoxCox <- function(x,lambda=1,base=exp(1)){
-if(lambda!=0) return((x^lambda-1) / lambda) else return(log(x,base))
-}
+#' Interpolate Box-Cox Transformation Parameter \code{lambda}
+#'
+#' Interpolates Box-Cox transformation parameter \code{lambda}.
+#'
+#' @params x numerical vector.
+#' @params lambda0 numeric, starting value of parameter lambda.
+#' @params lambda1 numeric, end value of parameter lambda.
+#' @inheritParams tParams
+#' @inheritParams whenParams
+#' @inheritParams pParams
+#' @return numerical vector, Box-Cox transformed 
+#' values for current interpolated value of lambda.
+#' @export
+#' @author Andrej Blejec \email{andrej.blejec@nib.si}
+#' @examples
+#' if(interactive()) 
+#' x <- runif(250,1,3)
+#' animator("newplot(xlim=c(0,max(x)^2),ylim=c(0,1),axes=TRUE,asp=NA);
+#' xt <- tBoxCox(x,-1,3,t); rug(xt);
+#' lines(density(xt,add=TRUE))",life=5,verbose=TRUE)
 # homotopy change of parameter lambda in boxcox transform
-tBoxCox <- function(x,lambda0,lambda1=lambda0, t, when ,base=exp(1), ...){
+tBoxCox <- function(x,lambda0,lambda1=lambda0, t, when ,p){
+BoxCox <- function(x,lambda=1){
+if(lambda!=0) return((x^lambda-1) / lambda) else return(log(x))
+}
 if(missing(t)) t <- get("t",envir=sys.frame(-1))
-   BoxCox(x,h(lambda0,lambda1,t,when=when),base=base)
+   invisible(BoxCox(x,h(lambda0,lambda1,t,when=when)))
 }
 #
-if(interactive()) animator("newplot();plot(tBoxCox(x,-5,0,t,base=2))",life=5,verbose=TRUE)
-
+if(interactive()) {
+ x <- runif(250,1,3)
+ animator("newplot(xlim=c(0,max(x)^2),ylim=c(0,1),axes=TRUE,asp=NA);
+ xt <- tBoxCox(x,-1,3,t); rug(xt);
+ lines(density(xt,add=TRUE))",life=5,verbose=TRUE)
+}
 
 ## ------------------------------------------------------------------------
 test <- function(x) {
@@ -838,6 +969,22 @@ invisible(as.animator(block,life))
 
 
 ## ----fct animator--------------------------------------------------------
+#' Plot Animated Block of Commands.
+#'
+#' Main function that plots animated sequence of figures.
+#'
+#' @params block character or block containing graphical timed commands.
+#' @params life numerical, duation of animation.
+#' @params fps numerical, frames per second.
+#' @params pause numerical, length of the pause between plotted frames.
+#' @params verbose logocal, if TRUE print animation characteristics.
+#' @return object of class \code{animator}
+#' @export
+#' @author Andrej Blejec \email{andrej.blejec@nib.si}
+#' @examples
+#' if(interactive())
+#' animator("newplot();tpoints(2,2,5,8,cex=2,pch=16)",life=2,verbose=TRUE)
+#
 animator <- function(block, life=1,fps=25,pause=0.5,verbose=FALSE){
 if(is.na(pause)) pause=0.1
 t0 <- Sys.time()

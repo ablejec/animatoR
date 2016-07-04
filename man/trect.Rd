@@ -53,7 +53,7 @@ xright1  <- 6
 ytop1    <- 9
 newplot()
 rect( xleft0, ybottom0, xright0, ytop0,lty=2,border=2)
-rect( xleft1, ybottom1, xright1, ytop1,lty=2,border=4)              
+rect( xleft1, ybottom1, xright1, ytop1,lty=2,border=4)
 arrows(
 c(xleft0,xright0),c(ybottom0,ytop0),
 c(xleft1,xright1),c(ybottom1,ytop1),lty=2)
