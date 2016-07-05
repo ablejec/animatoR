@@ -17,14 +17,14 @@ the times of: entrance, exit, start of movement and, end of movement.}
 \item{p}{numeric, homotopy power parameter. Defaults to 1.}
 }
 \value{
-numerical vector, Box-Cox transformed 
+numerical vector, Box-Cox transformed
 values for current interpolated value of lambda.
 }
 \description{
 Interpolates Box-Cox transformation parameter \code{lambda}.
 }
 \examples{
-if(interactive()) 
+if(interactive())
 x <- runif(250,1,3)
 animator("newplot(xlim=c(0,max(x)^2),ylim=c(0,1),axes=TRUE,asp=NA);
 xt <- tBoxCox(x,-1,3,t); rug(xt);

@@ -24,10 +24,10 @@ Interpolates matrix elements between start and end value.
 }
 \examples{
 X0 <- matrix(c(1,2,3,4),2,2)
-X1 <- matrix(c(11,12,13,14),2,2)                     
-print(X0)                                            
-print(X1)                                            
-print(h(X0,X1,t=0.3))                    
+X1 <- matrix(c(11,12,13,14),2,2)
+print(X0)
+print(X1)
+print(h(X0,X1,t=0.3))
 }
 \author{
 Andrej Blejec \email{andrej.blejec@nib.si}

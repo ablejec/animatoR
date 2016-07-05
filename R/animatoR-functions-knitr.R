@@ -855,10 +855,10 @@ if(missing(t)) t <- get("t",envir=sys.frame(-1))
 #' @author Andrej Blejec \email{andrej.blejec@nib.si}
 #' @examples
 #' X0 <- matrix(c(1,2,3,4),2,2)
-#' X1 <- matrix(c(11,12,13,14),2,2)                     
-#' print(X0)                                            
-#' print(X1)                                            
-#' print(h(X0,X1,t=0.3))                    
+#' X1 <- matrix(c(11,12,13,14),2,2)
+#' print(X0)
+#' print(X1)
+#' print(h(X0,X1,t=0.3))
 #
 # homotopy change of matrix
 # set size po maintain proportional areas
@@ -879,12 +879,12 @@ if(missing(t)) t <- get("t",envir=sys.frame(-1))
 #' @inheritParams tParams
 #' @inheritParams whenParams
 #' @inheritParams pParams
-#' @return numerical vector, Box-Cox transformed 
+#' @return numerical vector, Box-Cox transformed
 #' values for current interpolated value of lambda.
 #' @export
 #' @author Andrej Blejec \email{andrej.blejec@nib.si}
 #' @examples
-#' if(interactive()) 
+#' if(interactive())
 #' x <- runif(250,1,3)
 #' animator("newplot(xlim=c(0,max(x)^2),ylim=c(0,1),axes=TRUE,asp=NA);
 #' xt <- tBoxCox(x,-1,3,t); rug(xt);
@@ -974,10 +974,10 @@ invisible(as.animator(block,life))
 #' Main function that plots animated sequence of figures.
 #'
 #' @params block character or block containing graphical timed commands.
-#' @params life numerical, duation of animation.
+#' @params life numerical, duration of animation.
 #' @params fps numerical, frames per second.
 #' @params pause numerical, length of the pause between plotted frames.
-#' @params verbose logocal, if TRUE print animation characteristics.
+#' @params verbose logical, if TRUE print animation characteristics.
 #' @return object of class \code{animator}
 #' @export
 #' @author Andrej Blejec \email{andrej.blejec@nib.si}
@@ -989,7 +989,6 @@ animator <- function(block, life=1,fps=25,pause=0.5,verbose=FALSE){
 if(is.na(pause)) pause=0.1
 t0 <- Sys.time()
 t <- 0
-i <- 0
 life <- life
 life1 <- 1/life
 pause <- pause/fps
@@ -1002,7 +1001,6 @@ for(t in ts){
         { eval(block)}
     if(is.character(block))
         { eval(parse(text=block))}
-    i <- i+1
     if (dev.interactive()) {
         dev.flush()
         if(!is.na(pause)) Sys.sleep(pause)
@@ -1015,7 +1013,7 @@ for(t in ts){
 Life <- Sys.time()-t0
 if(verbose) cat(
 "\nTime  :",Life,
-"\nFrames:",i,
+"\nFrames:",length(ts),
 "\nF/s   :",round(i/as.numeric(Life)),
 "\ndt    :",ts[3]-ts[2],"\n")
 #attr(block,"class") <- "animator"
