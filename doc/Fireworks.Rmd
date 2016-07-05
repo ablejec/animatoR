@@ -1,0 +1,127 @@
+---
+title: ""
+author: "Andrej Blejec, R and animatoR"
+date: ""
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,warning = FALSE)
+library(animatoR)
+library(knitr)
+## preveri attribute
+as.animator <- function(x,life=1){
+ class(x) <- "animator"
+ attr(x,"life") <- life
+ return(x)
+}
+
+###
+## plot method for class \code{animator}.
+##
+plot.animator <- function(x,life,...) {
+if(missing(life)) life <- attr(x,"life")
+animator(x,life=life,...)
+}
+
+##
+
+```
+
+```{r,echo=FALSE,fig.show='animate',aniopts='controls,loop,autoplay',interval=0.02}
+#if(!interactive()) pdf(file="../doc/anim-slika.pdf")
+oldpar <- par(mar=c(0,0,0,0))
+n <- 21
+x0 <- 5
+y0 <- 5
+x1 <- 5+runif(n,2,4)*c(sin(0:n*2*pi/n))
+y1 <- 5+runif(n,2,4)*c(cos(0:n*2*pi/n))
+#
+plot(as.animator('
+newplot(axes=FALSE)
+#box()
+tpoints(0,0,5,5,when=c(0,0.2,0,0.3),trace=TRUE,pch=21,cex=tcex(2,30,t),
+bg=trgb("orange","red",t^0.1))
+ttext(5,8,5,4,
+text="Happy 4th of July!",when=c(0.5,1),cex=tcex(1,20,t),col=trgb("lightblue","blue",t,alpha1=1))
+## ttext(5,0,5,2,text="Happy 444th of July!", when=c(0.5,1),cex=tcex(1,20,t),col=trgb("red","blue",t,alpha1=1))
+tsegments(x0,y0,x1,y1,when=c(0.2,0.3,0.2,0.3), col=1:n,lwd=(1:n)/2)
+tpoints(x1,y1,jitter(x1,4),0.1,when=c(0.3,1),col=sample(1:n),cex=sample(tcex(1:n,0,t,when=c(0.3,1))),pch=8,lwd=(1:n)/2)
+segments(0,0,10,0,col=4,lwd=10)
+tsegments(0,0,10,0,col="skyblue",lwd=10)
+
+ttext(10,0,10,.3,text="Andrej & animatoR",when=c(0.5,0.7,0.5,1),col=8,adj=1,cex=1)
+'),life=6)
+#ttext(5,10,5,5,"Happy 4th of July!",when=c(0.6,1))
+par(oldpar)
+#includeLatex(poster="none",scale=1,other=",autoplay")
+```
+
+```{r}
+knitr::opts_knit$set(animation.fun = hook_scianimator)
+```
+
+```{r,echo=FALSE,fig.show='animate',aniopts='controls,loop,autoplay',interval=0.02}
+#if(!interactive()) pdf(file="../doc/anim-slika.pdf")
+oldpar <- par(mar=c(0,0,0,0))
+n <- 21
+x0 <- 5
+y0 <- 5
+x1 <- 5+runif(n,2,4)*c(sin(0:n*2*pi/n))
+y1 <- 5+runif(n,2,4)*c(cos(0:n*2*pi/n))
+#
+plot(as.animator('
+newplot(axes=FALSE)
+#box()
+tpoints(0,0,5,5,when=c(0,0.2,0,0.3),trace=TRUE,pch=21,cex=tcex(2,30,t),
+bg=trgb("orange","red",t^0.1))
+ttext(5,8,5,4,
+text="Happy 4th of July!",when=c(0.5,1),cex=tcex(1,20,t),col=trgb("lightblue","blue",t,alpha1=1))
+## ttext(5,0,5,2,text="Happy 444th of July!", when=c(0.5,1),cex=tcex(1,20,t),col=trgb("red","blue",t,alpha1=1))
+tsegments(x0,y0,x1,y1,when=c(0.2,0.3,0.2,0.3), col=1:n,lwd=(1:n)/2)
+tpoints(x1,y1,jitter(x1,4),0.1,when=c(0.3,1),col=sample(1:n),cex=sample(tcex(1:n,0,t,when=c(0.3,1))),pch=8,lwd=(1:n)/2)
+segments(0,0,10,0,col=4,lwd=10)
+tsegments(0,0,10,0,col="skyblue",lwd=10)
+
+ttext(10,0,10,.3,text="Andrej & animatoR",when=c(0.5,0.7,0.5,1),col=8,adj=1,cex=1)
+'),life=6)
+#ttext(5,10,5,5,"Happy 4th of July!",when=c(0.6,1))
+par(oldpar)
+#includeLatex(poster="none",scale=1,other=",autoplay")
+```
+
+```{r}
+knitr::opts_knit$set(animation.fun = hook_r2swf)
+```
+
+
+```{r,echo=FALSE,fig.show='animate',aniopts='controls,loop,autoplay',interval=0.02}
+#if(!interactive()) pdf(file="../doc/anim-slika.pdf")
+oldpar <- par(mar=c(0,0,0,0))
+n <- 21
+x0 <- 5
+y0 <- 5
+x1 <- 5+runif(n,2,4)*c(sin(0:n*2*pi/n))
+y1 <- 5+runif(n,2,4)*c(cos(0:n*2*pi/n))
+#
+plot(as.animator('
+newplot(axes=FALSE)
+#box()
+tpoints(0,0,5,5,when=c(0,0.2,0,0.3),trace=TRUE,pch=21,cex=tcex(2,30,t),
+bg=trgb("orange","red",t^0.1))
+ttext(5,8,5,4,
+text="Happy 4th of July!",when=c(0.5,1),cex=tcex(1,20,t),col=trgb("lightblue","blue",t,alpha1=1))
+## ttext(5,0,5,2,text="Happy 444th of July!", when=c(0.5,1),cex=tcex(1,20,t),col=trgb("red","blue",t,alpha1=1))
+tsegments(x0,y0,x1,y1,when=c(0.2,0.3,0.2,0.3), col=1:n,lwd=(1:n)/2)
+tpoints(x1,y1,jitter(x1,4),0.1,when=c(0.3,1),col=sample(1:n),cex=sample(tcex(1:n,0,t,when=c(0.3,1))),pch=8,lwd=(1:n)/2)
+segments(0,0,10,0,col=4,lwd=10)
+tsegments(0,0,10,0,col="skyblue",lwd=10)
+
+ttext(10,0,10,.3,text="Andrej & animatoR",when=c(0.5,0.7,0.5,1),col=8,adj=1,cex=1)
+'),life=6)
+#ttext(5,10,5,5,"Happy 4th of July!",when=c(0.6,1))
+par(oldpar)
+#includeLatex(poster="none",scale=1,other=",autoplay")
+```
+
+
