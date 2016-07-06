@@ -7,7 +7,7 @@
 animator(block, life = 1, fps = 25, pause = 0.5, verbose = FALSE)
 }
 \value{
-object of class \code{animator}
+object of class \code{animator}.
 }
 \description{
 Main function that plots animated sequence of figures.
@@ -18,5 +18,8 @@ animator("newplot();tpoints(2,2,5,8,cex=2,pch=16)",life=2,verbose=TRUE)
 }
 \author{
 Andrej Blejec \email{andrej.blejec@nib.si}
+}
+\seealso{
+\code{\link{as.animator}}, \code{\link{is.animator}}.
 }
 

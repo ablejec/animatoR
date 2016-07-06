@@ -973,12 +973,14 @@ invisible(as.animator(block,life))
 #'
 #' Main function that plots animated sequence of figures.
 #'
-#' @params block character or block containing graphical timed commands.
+#' @params block character, expression (block) or 
+#' object of class \code{animator} containing  graphical timed commands.
 #' @params life numerical, duration of animation.
 #' @params fps numerical, frames per second.
 #' @params pause numerical, length of the pause between plotted frames.
 #' @params verbose logical, if TRUE print animation characteristics.
-#' @return object of class \code{animator}
+#' @return object of class \code{animator}.
+#' @seealso \code{\link{as.animator}}, \code{\link{is.animator}}.
 #' @export
 #' @author Andrej Blejec \email{andrej.blejec@nib.si}
 #' @examples
@@ -1022,25 +1024,74 @@ invisible(as.animator(block,life))
 }
 
 ## ----fct plot.animator---------------------------------------------------
-###
-## plot method for class \code{animator}.
-##
+#' Plot Method for Class \code{animator}..
+#'
+#' Performs and plots the animation of an object.
+#'
+#' @params x character, expression (block) or
+#' object of class \code{animator} containing  graphical timed commands.
+#' @params life numerical, duration of animation.
+#' @params ... additional arguments passed to function \code{animator}.
+#' @return object of class \code{animator}.
+#' @seealso \code{\link{as.animator}}, \code{\link{is.animator}}.
+#' @export
+#' @author Andrej Blejec \email{andrej.blejec@nib.si}
+#' @examples
+#' x <- as.animator( 
+#' "newplot();tpoints(2,2,5,8,cex=2,pch=16)", life=2)
+#' print(x)
+#' if(interactive()) plot(x)
+#' ## Equivalent
+#' x <- as.animator(expression({
+#' newplot()
+#' tpoints(2,2,5,8,cex=2,pch=16)
+#' }), 
+#' life=2)
+#' print(x)
+#'if(interactive()) plot(x)
+#
 plot.animator <- function(x,life,...) {
 if(missing(life)) life <- attr(x,"life")
 animator(x,life=life,...)
 }
 
 ## ----fct as.animator-----------------------------------------------------
-## preveri attribute
+#' Objects of class \code{animator}.
+#'
+#' Creates or tests for objects of  class \code{animator}.
+#'
+#' @params x character, expression (block) or
+#' object of class \code{animator} containing  graphical timed commands.
+#' @params life numerical, duration of animation.
+#' @return \code{as.animator} attempts to add the class 
+#' \code{animator} to the argument \x}.
+#'
+#' \code{is.animator} returns \code{TRUE} if \code{x}  
+#' is an \code{animator} object and \code{FALSE} otherwise.
+#'
+#' @seealso \code{\link{animator}}.
+#' @export
+#' @author Andrej Blejec \email{andrej.blejec@nib.si}
+#' @examples
+#' x <- as.animator(
+#' "newplot();tpoints(2,2,5,8,cex=2,pch=16)", life=2)
+#' print(x)
+#' if(interactive()) plot(x)
+#' ## Equivalent
+#' x <- as.animator(expression({
+#' newplot()
+#' tpoints(2,2,5,8,cex=2,pch=16)
+#' }),
+#' life=2)
+#' print(x)
+#'if(interactive()) plot(x)
+#
 as.animator <- function(x,life=1){
  class(x) <- "animator"
  attr(x,"life") <- life
  return(x)
  }
-##
-
-## ----fct is.animator-----------------------------------------------------
-## preveri attribute
+## Tests for object class
 is.animator <- function(x){
  return(class(x) == "animator")
  }
