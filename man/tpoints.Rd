@@ -17,8 +17,7 @@ tpoints(x0, y0, x1 = x0, y1 = y0, t, when = c(0, 1), p = 1,
 \item{y1}{numeric vector, end y coordinates.}
 
 \item{t}{numeric, homotopy parameter, limited between 0 and 1.
-This parameter can be considered as fraction of time
-duration of the animation.}
+This parameter can be considered as fraction of animation duration time.}
 
 \item{when}{numeric vector. This parameter controls
 the times of: entrance, exit, start of movement and, end of movement.}
@@ -29,11 +28,11 @@ the times of: entrance, exit, start of movement and, end of movement.}
 
 \item{trace.col}{color of the trace.}
 
-\item{...}{other parameters passed to \code{\link{points}}.}
+\item{...}{additional arguments passed to \code{\link{points}}.}
 }
 \value{
 List with numerical components \code{x} and \code{y} with
-current position
+  current position.
 }
 \description{
 Move points from start to end location
@@ -58,5 +57,6 @@ Andrej Blejec \email{andrej.blejec@nib.si}
 \code{\link[graphics]{points}}
 }
 \keyword{aplot}
-\keyword{dynamic,}
+\keyword{dynamic}
+\keyword{graphics}
 

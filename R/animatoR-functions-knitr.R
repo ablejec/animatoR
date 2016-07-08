@@ -1,7 +1,7 @@
 ## ----echo=FALSE----------------------------------------------------------
 ###################################################
 ##                                               ##
-## (c) Andrej Blejec (andrej.blejec@nib.si) new     ##
+## (c) Andrej Blejec (andrej.blejec@nib.si) new  ##
 ##                                               ##
 ###################################################
 
@@ -18,7 +18,7 @@ animator <- function(...){ warning("animator function not yet defined\n")}
 #' @section Usage:
 #'
 #' Animated graphics can be useful for demonstration of
-#' results that change in a linear succession
+#' results that change in a succession
 #' (e.g. time or direction).
 #' It can be used for making of statistical 'cartoons'
 #' for demonstartion of statistical concepts in teaching.
@@ -34,8 +34,7 @@ NULL
 #' Homotopy argument
 #'
 #' @param t numeric, homotopy parameter, limited between 0 and 1.
-#' This parameter can be considered as fraction of time
-#' duration of the animation.
+#' This parameter can be considered as fraction of animation duration time.
 #' @name tParams
 NULL
 
@@ -59,7 +58,7 @@ NULL
 NULL
 
 ## ----coord params--------------------------------------------------------
-#' Coordinate arguments
+#' Coordinate Arguments
 #'
 #' The core coordinate arguments for animatoR plotting functions
 #'
@@ -76,20 +75,20 @@ NULL
 #' Opens a new empty plotting window with default settings
 #'  (0, 10) x (0, 10), no axes nor labels.
 #'
-#' @param xlim see \code{\link{plot}}
-#' @param ylim see \code{\link{plot}}
-#' @param ann see \code{\link{plot}}
-#' @param axes see \code{\link{plot}}
-#' @param type see \code{\link{plot}}
-#' @param asp aspect ratio, default y/x = 1 see \code{\link{plot.new}}
+#' @param xlim see \code{\link{plot}}.
+#' @param ylim see \code{\link{plot}}.
+#' @param ann see \code{\link{plot}}.
+#' @param axes see \code{\link{plot}}.
+#' @param type see \code{\link{plot}}.
+#' @param asp aspect ratio, default y/x = 1 see \code{\link{plot.new}}.
 #' @param stamp logical, should time be visible on plots.
-#' @param ... see \code{\link{plot}}
+#' @param ... additional arguments passed to \code{\link{plot}}.
 #' @return NULL
 #' @export
 #' @import graphics
 #' @import grDevices
 #' @seealso \code{\link{plot}}
-#' @keywords  dynamic, hplot
+#' @keywords  graphics dynamic hplot
 #' @author Andrej Blejec \email{andrej.blejec@nib.si}
 #' @examples
 #' newplot()
@@ -104,11 +103,11 @@ if(stamp) text(par("usr")[2]*0.8,par("usr")[4]*1.05,paste("t =",
 round(get("t",envir=sys.frame(-1)),2)),adj=0,xpd=TRUE)
 }
 
-## ------------------------------------------------------------------------
+## ----fct h---------------------------------------------------------------
 #' Homotopy Function
 #'
 #' Interpolates a position between start and end value(s).
-#' Homotopy controled by a homotopy parameter \code{t} and power parameter \code{p} is used for interpolation.
+#' Homotopy is controled by a homotopy parameter \code{t} and power parameter \code{p} is used for interpolation.
 #'
 #' @param x0 numeric vector of start values.
 #' @param x1 numeric vector of end values.
@@ -118,7 +117,7 @@ round(get("t",envir=sys.frame(-1)),2)),adj=0,xpd=TRUE)
 #' @return interpolated value (see Note)
 #' @export
 #' @note Returned coordinates are determined using the homotopy function
-#'   \deqn{x_t=x_0  (1-t^p)+x_1 t^p,  t\in[0,1]}.
+#'   \deqn{x_t=x_0  (1-t^p)+x_1 t^p,  t\in[0,1]}
 #' @keywords dynamic
 #' @author Andrej Blejec \email{andrej.blejec@nib.si}
 #' @examples
@@ -190,12 +189,12 @@ print(X)
 #' @inheritParams pParams
 #' @param trace logical. Should movement leave a trace?
 #' @param trace.col color of the trace.
-#' @param ... other parameters passed to \code{\link{points}}.
+#' @param ... additional arguments passed to \code{\link{points}}.
 #' @return List with numerical components \code{x} and \code{y} with
-#' current position
+#'   current position.
 #' @export
 #' @seealso \code{\link[graphics]{points}}
-#' @keywords dynamic, aplot
+#' @keywords graphics dynamic aplot
 #' @author Andrej Blejec \email{andrej.blejec@nib.si}
 #' @examples
 #' x0 <- c(0,5)
@@ -228,26 +227,26 @@ segments(x0,y0,xt,yt ,col=trace.col)
     invisible(list(x=xt,y=yt))
 }
 
-## ----tcols---------------------------------------------------------------
+## ----makeTransparent-----------------------------------------------------
 #' Make Transparent Colors
 #'
 #' Add transparency parameter (alpha) to colors
 #'
 #' @param x vector specifying colors or factor.
-#' Colors can be specified as numbers or
-#' character strings, see \code{\link{colors}}.
-#' Factors are also acceptable
-#' in which case the input will be transformed into level numbers.
+#'   Colors can be specified as numbers or
+#'   character strings, see \code{\link{colors}}.
+#'   Factors are also acceptable
+#'   in which case the input will be transformed into level numbers.
 #' @param alpha numeric, transparency value \code{\link{rgb}}.
 #' @return A character vector with elements of 7 or 9 characters, "#"
-#' followed by the red, blue, green and optionally alpha
-#' values in hexadecimal (after rescaling to 0 ... 255).
-#' The optional alpha values range from 0
-#' (fully transparent) to 255 (opaque).
+#'   followed by the red, blue, green and optionally alpha
+#'   values in hexadecimal (after rescaling to 0 ... 255).
+#'   The optional alpha values range from 0
+#'   (fully transparent) to 255 (opaque).
 #' @export
 #' @seealso \code{\link[grDevices]{rgb}} for setting colors and
-#'  \code{\link[grDevices]{colors}} for color names.
-#' @keywords dynamic, aplot
+#'   \code{\link[grDevices]{colors}} for color names.
+#' @keywords graphics dynamic aplot
 #' @author Andrej Blejec \email{andrej.blejec@nib.si}
 #' @examples
 #' # Transparent red
@@ -295,37 +294,47 @@ apply(y,2,function(x) rgb(x[1],x[2],x[3],x[4]))
 #'
 #' This function interpolates the color between start and end color.
 #'
-#' @param x0 numeric or character vector specifying start color,
-#' see \code{\link[grDevices]{colors}}.
-#' @param x1 numeric or character vector specifying end color,
-#' see \code{\link[grDevices]{colors}}.
+#' @param x0 vector specifying start colors or factor.
+#'   Colors can be specified as numbers or
+#'   character strings, see \code{\link{colors}}.
+#'   Factors are also acceptable
+#'   in which case the input will be transformed into level numbers.
+#' @param x1 vector specifying end colors or factor.
+#'   Colors can be specified as numbers or
+#'   character strings, see \code{\link{colors}}.
+#'   Factors are also acceptable
+#'   in which case the input will be transformed into level numbers.
 #' @inheritParams tParams
 #' @inheritParams whenParams
 #' @inheritParams pParams
 #' @param alpha0,alpha1 numeric, transparency value
-#' \code{\link[grDevices]{rgb}}.
-#' @param ... additional parameters passed to \code{\link[grDevices]{rgb}}.
+#'   \code{\link[grDevices]{rgb}}.
+#' @param ... additional arguments passed to \code{\link[grDevices]{rgb}}.
 #' @return A character vector with elements of 7 or 9 characters, "#"
-#' followed by the red, blue, green and optionally alpha
-#' values in hexadecimal (after rescaling to 0 ... 255).
-#' The optional alpha values range from 0
-#' (fully transparent) to 255 (opaque).
+#'   followed by the red, blue, green and optionally alpha
+#'   values in hexadecimal (after rescaling to 0 ... 255).
+#'   The optional alpha values range from 0
+#'   (fully transparent) to 255 (opaque).
 #' @export
 #' @seealso \code{\link[grDevices]{rgb}} for setting colors and
-#'  \code{\link[grDevices]{colors}} for color names.
-#' @keywords dynamic, aplot
+#'   \code{\link[grDevices]{colors}} for color names.
+#'
+#'   See \code{link{makeTransparent}} to add transparency to the colors.
+#'
+#' @keywords graphics dynamic aplot
 #' @author Andrej Blejec \email{andrej.blejec@nib.si}
 #' @examples
 #' if(interactive()){
 #' animator('
 #' newplot()
-#' points(5,5,col=trgb("yellow","blue",t,alpha1=1),
-#' pch=16,cex=tcex(0,20,t),life=0.5)
-#' ')
+#' points(5,5,col=trgb("red","blue",t,alpha1=1),pch=16,cex=tcex(80,160,t))',
+#' life=1)
 #' }
 #
 trgb <- function(x0, x1=x0, t, when=c(0,1), p =1, alpha0=1, alpha1=1,...){
 if(missing(t)) t <- get("t",envir=sys.frame(-1))
+    if(is.factor(x0)) x0 <- as.numeric(x0)
+    if(is.factor(x1)) x1 <- as.numeric(x1)
     if(is.character(x0)) x0 <- col2rgb(x0)
     if(is.character(x1)) x1 <- col2rgb(x1)
     xt <- h(x0/255,x1/255,t,when,p=p)
@@ -337,12 +346,12 @@ if(missing(t)) t <- get("t",envir=sys.frame(-1))
 if(interactive()){
 animator('
 newplot()
-points(5,5,col=trgb("yellow","blue",t,alpha1=1),pch=16,cex=tcex(0,20,t),life=0.5)
-')
+points(5,5,col=trgb("red","blue",t,alpha1=1),pch=16,cex=tcex(80,160,t))
+',life=1)
 }
 
 ## ----fct tlines----------------------------------------------------------
-#' Move lines
+#' Move Lines
 #'
 #' Move lines from start to end location
 #'
@@ -350,12 +359,12 @@ points(5,5,col=trgb("yellow","blue",t,alpha1=1),pch=16,cex=tcex(0,20,t),life=0.5
 #' @inheritParams tParams
 #' @inheritParams whenParams
 #' @inheritParams pParams
-#' @param ... other parameters passed to \code{\link{lines}}.
+#' @param ... additional arguments passed to \code{\link{lines}}.
 #' @return List with numerical components \code{x} and \code{y} with
-#' current position
+#'   current position
 #' @export
 #' @seealso \code{\link[graphics]{lines}}
-#' @keywords graphics
+#' @keywords graphics dynamic aplot
 #' @author Andrej Blejec \email{andrej.blejec@nib.si}
 #' @examples
 #' x0 <- c(0,5,10)
@@ -394,19 +403,20 @@ if(missing(t)) t <- get("t",envir=sys.frame(-1))
 ## ----fct dsegments-------------------------------------------------------
 #' Draw Segments
 #'
-#' Draw segments from (x0,y0) to (x1,y1). The effect is
+#' Draw segments from \eqn{(x_0,y_0)} to \eqn{(x_1,y_1)}. The effect is
 #' like starting from a point and draw a line.
 #'
 #' @inheritParams coordParams
 #' @inheritParams tParams
 #' @inheritParams whenParams
 #' @inheritParams pParams
-#' @param ... other parameters passed to \code{\link{segments}}.
-#' @return List with numerical components \code{x} and \code{y} with
-#' current position
+#' @param ... additional arguments passed to \code{\link{segments}}.
+#' @return List with numerical components \code{x} and \code{y} giving
+#'   current position.
 #' @export
-#' @seealso \code{\link[graphics]{segments}}
-#' @keywords graphics
+#' @seealso \code{\link[graphics]{segments}}, \code{\link{tsegments}}
+#'   for moving segments and \code{\link{darrows}} for drawing arrows.
+#' @keywords graphics dynamic aplot
 #' @author Andrej Blejec \email{andrej.blejec@nib.si}
 #' @examples
 #' x0 <- c(0,5,10)
@@ -453,18 +463,22 @@ if(missing(t)) t <- get("t",envir=sys.frame(-1))
 #' Change segment defining positions and plot subsequent segments.
 #' Lines are "floating" to final positions.
 #'
-#' @inheritParams coordParams
+#' @param x0,x1 numeric vectors, start segments defining x coordinates.
+#' @param y0,y1 numeric vector, start segments defining y coordinates.
+#' @param x2,x3 numeric vector, end segments defining x coordinates.
+#' @param y2,y3 numeric vector, end segments defining y coordinates.
 #' @inheritParams tParams
 #' @inheritParams whenParams
 #' @inheritParams pParams
 #' @param fixed numeric, which location is fixed:
-#' start (0, default) - draw from \code{(x0,y0)} to \code{(x1,y1)},
-#' or end (1) - reverse.
-#' @param ... other parameters passed to \code{\link{segments}}.
-#' @return Numerical matrix with colums defining the current segments.
+#'   start (0, default) - draw from \code{(x0,y0)} to \code{(x1,y1)},
+#'   or end (1) - reverse.
+#' @param ... additional arguments passed to \code{\link{segments}}.
+#' @return Numerical matrix with columns defining the current segments.
 #' @export
-#' @seealso \code{\link[graphics]{segments}}
-#' @keywords graphics
+#' @seealso \code{\link[graphics]{segments}}, \code{\link{dsegments}}
+#'   for drawing segments and \code{\link{tarrows}} for moving arrows.
+#' @keywords graphics dynamic aplot
 #' @author Andrej Blejec \email{andrej.blejec@nib.si}
 #' @examples
 #' x0 <- c(0,4,7)
@@ -517,19 +531,22 @@ if(missing(t)) t <- get("t",envir=sys.frame(-1))
 ## ----fct darrows---------------------------------------------------------
 #' Draw Arrows
 #'
-#' Draw arrows from start to end location
+#' Draw arrows from start to end location. The effect is
+#' like starting from a point and draw an arrow on the screen.
 #'
 #' @inheritParams coordParams
 #' @inheritParams tParams
 #' @inheritParams whenParams
 #' @inheritParams pParams
 #' @param length length of the edges of the arrow head (in inches).
-#' @param ... other parameters passed to \code{\link{arrows}}.
+#' @param ... additional arguments passed to \code{\link{arrows}}.
 #' @return List with numerical components \code{x} and \code{y} with
-#' current position
+#'   current position.
 #' @export
-#' @seealso \code{\link[graphics]{arrows}}
-#' @keywords graphics
+#' @seealso \code{\link[graphics]{arrows}}, \code{\link{tarrows}}
+#'   for moving arrows and \code{\link{dsegments}} for drawing segments.
+
+#' @keywords graphics dynamic aplot
 #' @author Andrej Blejec \email{andrej.blejec@nib.si}
 #' @examples
 #' x0 <- c(0,5,10)
@@ -577,62 +594,58 @@ if(missing(t)) t <- get("t",envir=sys.frame(-1))
 }
 
 ## ----fct tarrows---------------------------------------------------------
-#' Draw Arrows
+#' Move Arrows
 #'
-#' Draw arrows from start to end location
+#' Move arrows from start to end location
 #'
-#' @inheritParams coordParams
+#' @param x0,x1 numeric vectors, start arrow defining x coordinates.
+#' @param y0,y1 numeric vector, start arrow defining y coordinates.
+#' @param x2,x3 numeric vector, end arrow defining x coordinates.
+#' @param y2,y3 numeric vector, end arrow defining y coordinates.
 #' @inheritParams tParams
 #' @inheritParams whenParams
 #' @inheritParams pParams
-#' @param fixed numeric, which location is fixed:
-#' start (0, default) - draw from \code{(x0,y0)} to \code{(x1,y1)},
-#' or end (1) - reverse.
 #' @param length length of the edges of the arrow head (in inches).
-#' @param ... other parameters passed to \code{\link{arrows}}.
+#' @param ... additional arguments passed to \code{\link{arrows}}.
 #' @return List with numerical components \code{x} and \code{y} with
-#' current position
+#'   current position
 #' @export
-#' @seealso \code{\link[graphics]{arrows}}
-#' @keywords graphics
+#' @seealso \code{\link[graphics]{arrows}}, \code{\link{darrows}}
+#'   for drawing arrows and \code{\link{tsegments}} for moving segments.
+#' @keywords graphics dynamic aplot
 #' @author Andrej Blejec \email{andrej.blejec@nib.si}
 #' @examples
-#' x0 <- c(0,5,10)
-#' y0 <- c(0,10,0)
-#' x1 <- c(10,5,0)
-#' y1 <- c(10,0,10)
-#' print(tsegments(x0,y0,x1,y1,0.5))
-#' #############
-#' par(mfrow=c(2,2))
-#' for( t in seq(0,1,1/3)) {
+#' x0 <- c(0,4,7)
+#' y0 <- c(0,7,0)
+#' x1 <- c(4,0,7)
+#' y1 <- c(4,7,5)
+#' x2 <- c(0,4,7)+2
+#' y2 <- c(0,7,0)-2
+#' x3 <- c(4,0,7)+2
+#' y3 <- c(4,7,5)-2
 #' newplot()
-#' tsegments(x0,y0,x1,y1,t)
+#' arrows(x0,y0,x1,y1,lty=2)
+#' arrows(x2,y2,x3,y3,lty=2)
+#' pos <- tsegments(x0,y0,x1,y1,x2,y2,x3,y3,0.75)
+#' pos
+#' points(pos$start)
+#' points(pos$end)
 #' points(x0,y0,pch="0")
 #' points(x1,y1,pch="1")
-#' }
-#' #############
-#' par(mfrow=c(2,2))
-#' for( t in seq(0,1,1/3)) {
-#' newplot()
-#' tsegments(x0,y0,x1,y1,t,fixed=1)
-#' points(x0,y0,pch="0")
-#' points(x1,y1,pch="1")
-#' }
+#' points(x2,y2,pch="2")
+#' points(x3,y3,pch="3")
 tarrows <-
-function(x0, y0, x1, y1, t, when,p=1, fixed=1, length=0.125, ...) {
-X <- cbind(x0,y0,x1,y1)
-x0 <- X[,1]
-y0 <- X[,2]
-x1 <- X[,3]
-y1 <- X[,4]
+function(x0, y0, x1, y1, x2=x0, y2=y0, x3=x1, y3=y1, t, when, p=1, length=0.125, ...) {
+X <- cbind(x0, y0, x1, y1, x2, y2, x3, y3)
 if(missing(t)) t <- get("t",envir=sys.frame(-1))
-    if(fixed) t <- 1-t
-    xt <- h(x0, x1, t,when,p)
-    yt <- h(y0, y1, t,when,p)
-    switch(fixed,
-    arrows(x0,y0,xt,yt,length=length,...),
-    arrows(xt,yt,x1,y1,length=length,...))
-    invisible(list(x=xt,y=yt))
+    xt0 <- h(X[,1], X[,3], t,when,p)
+    yt0 <- h(X[,2], X[,4], t,when,p)
+    xt1 <- h(X[,5], X[,7], t,when,p)
+    yt1 <- h(X[,6], X[,8], t,when,p)
+#
+    arrows(xt0, yt0, xt1, yt1,...)
+    invisible(list(start=list(x=xt0,y=yt0),
+    end=list(x=xt1,y=yt1)))
 }
 
 ## ----fct tpolygon--------------------------------------------------------
@@ -644,12 +657,12 @@ if(missing(t)) t <- get("t",envir=sys.frame(-1))
 #' @inheritParams tParams
 #' @inheritParams whenParams
 #' @inheritParams pParams
-#' @param ... other parameters passed to \code{\link{polygon}}.
+#' @param ... additional arguments passed to \code{\link{polygon}}.
 #' @return List with numerical components \code{x} and \code{y} with
-#' current position
+#'   current position
 #' @export
 #' @seealso \code{\link[graphics]{polygon}}
-#' @keywords dynamic, aplot
+#' @keywords graphics dynamic aplot
 #' @author Andrej Blejec \email{andrej.blejec@nib.si}
 #' @examples
 #' x0 <- c(0,5)
@@ -693,12 +706,13 @@ if(missing(t)) t <- get("t",envir=sys.frame(-1))
 #' @inheritParams tParams
 #' @inheritParams whenParams
 #' @inheritParams pParams
-#' @param ... other parameters passed to \code{\link{rect}}.
+#' @param ... additional arguments passed to \code{\link{rect}}.
 #' @return List with numerical components \code{x} and \code{y} with
-#' current position
+#'   current position
 #' @export
-#' @seealso \code{\link[graphics]{rect}}
-#' @keywords dynamic, aplot
+#' @seealso \code{\link[graphics]{rect}} and
+#'   \code{\link{tpolygon}} for moving a polygon.
+#' @keywords graphics dynamic aplot
 #' @author Andrej Blejec \email{andrej.blejec@nib.si}
 #' @examples
 #' xleft0   <- 1
@@ -744,20 +758,22 @@ xright=xrightt,ytop=ytopt))
 #' This function interpolates the symbol size
 #' between the start and end size.
 #'
-#' @param x0 numeric vector specifying start symbol size,
-#' see \code{\link[graphics]{par} cex}.
-#' @param x1 numeric vector specifying end symbol size,
-#' see \code{\link[graphics]{par} cex}.
+#' @param cex0 numeric vector specifying start symbol size,
+#'   see \code{\link[graphics]{par} cex}.
+#' @param cex1 numeric vector specifying end symbol size,
+#'   see \code{\link[graphics]{par} cex}.
 #' @inheritParams tParams
 #' @inheritParams whenParams
 #' @inheritParams pParams
-#' @params area logical, if TRUE (default) sizes will be treated as
-#' area. If FALSE, sizes will be considered by diameter.
+#' @param area logical, if TRUE (default) sizes will be treated as
+#'   area. If FALSE, sizes will be considered by diameter.
 #' @return A numeric vector giving the amount by which plotting text
-#' and symbols should be magnified relative to the default \code{cex} value.
+#'   and symbols should be magnified relative to the
+#'   default \code{cex} value.
 #' @export
-#' @seealso \code{\link[graphics]{par}} for setting symbol sizes.
-#' @keywords dynamic, aplot
+#' @seealso \code{\link[graphics]{par}} for
+#'   setting symbol sizes (\code{cex}).
+#' @keywords graphics dynamic aplot
 #' @author Andrej Blejec \email{andrej.blejec@nib.si}
 #' @examples
 #' if(interactive()){
@@ -801,12 +817,12 @@ if(missing(t)) t <- get("t",envir=sys.frame(-1))
 #' @inheritParams whenParams
 #' @inheritParams pParams
 #' @param text character vector, tect to display.
-#' @param ... other parameters passed to \code{\link{text}}.
+#' @param ... additional arguments passed to \code{\link{text}}.
 #' @return List with numerical components \code{x} and \code{y} with
-#' current position
+#'   current position.
 #' @export
 #' @seealso \code{\link[graphics]{text}}
-#' @keywords dynamic, aplot
+#' @keywords graphics dynamic aplot
 #' @author Andrej Blejec \email{andrej.blejec@nib.si}
 #' @examples
 #' x0 <- c(0,5)
@@ -845,8 +861,8 @@ if(missing(t)) t <- get("t",envir=sys.frame(-1))
 #'
 #' Interpolates matrix elements between start and end value.
 #'
-#' @params X0 numerical matrix, start matrix
-#' @params X1 numerical matrix, end matrix
+#' @param x0 numerical matrix, start matrix
+#' @param x1 numerical matrix, end matrix
 #' @inheritParams tParams
 #' @inheritParams whenParams
 #' @inheritParams pParams
@@ -854,33 +870,34 @@ if(missing(t)) t <- get("t",envir=sys.frame(-1))
 #' @export
 #' @author Andrej Blejec \email{andrej.blejec@nib.si}
 #' @examples
-#' X0 <- matrix(c(1,2,3,4),2,2)
-#' X1 <- matrix(c(11,12,13,14),2,2)
-#' print(X0)
-#' print(X1)
-#' print(h(X0,X1,t=0.3))
+#' x0 <- matrix(c(1,2,3,4),2,2)
+#' x1 <- matrix(c(11,12,13,14),2,2)
+#' print(x0)
+#' print(x1)
+#' print(h(x0,x1,t=0.3))
 #
 # homotopy change of matrix
 # set size po maintain proportional areas
-# Warning: swapped arguments X0 and X1
-tmatrix <- function(X0, X1=diag(nrow(X0)), t, when, p){
+# Warning: swapped arguments x0 and x1
+tmatrix <- function(x0, x1=diag(nrow(x0)), t, when, p){
 if(missing(t)) t <- get("t",envir=sys.frame(-1))
-    invisible(h(X0,X1,t,when, p))
+    invisible(h(x0,x1,t,when, p))
 }
 
 ## ----fct tBoxCox---------------------------------------------------------
-#' Interpolate Box-Cox Transformation Parameter \code{lambda}
+#' Box-Cox Transformation with Interpolated Parameter \eqn{lambda}
 #'
-#' Interpolates Box-Cox transformation parameter \code{lambda}.
+#' Transform data using the Box-Cox transformation with
+#' parameter \eqn{lambda} interpolated between start and end value.
 #'
-#' @params x numerical vector.
-#' @params lambda0 numeric, starting value of parameter lambda.
-#' @params lambda1 numeric, end value of parameter lambda.
+#' @param x numerical vector.
+#' @param lambda0 numeric, starting value of parameter lambda.
+#' @param lambda1 numeric, end value of parameter lambda.
 #' @inheritParams tParams
 #' @inheritParams whenParams
 #' @inheritParams pParams
 #' @return numerical vector, Box-Cox transformed
-#' values for current interpolated value of lambda.
+#'   values for current interpolated value of lambda.
 #' @export
 #' @author Andrej Blejec \email{andrej.blejec@nib.si}
 #' @examples
@@ -969,17 +986,26 @@ invisible(as.animator(block,life))
 
 
 ## ----fct animator--------------------------------------------------------
-#' Plot Animated Block of Commands.
+#' Plot Block of Animated Commands.
 #'
-#' Main function that plots animated sequence of figures.
+#' Make and plot animated sequence of figures.
 #'
-#' @params block character, expression (block) or 
-#' object of class \code{animator} containing  graphical timed commands.
-#' @params life numerical, duration of animation.
-#' @params fps numerical, frames per second.
-#' @params pause numerical, length of the pause between plotted frames.
-#' @params verbose logical, if TRUE print animation characteristics.
-#' @return object of class \code{animator}.
+#' @aliases as.animator is.animator
+#' @param x character, expression (block) or
+#'   object of class \code{animator} containing  graphical timed commands.
+#' @param life numerical, duration of animation.
+#' @param fps numerical, frames per second.
+#' @param pause numerical, length of the pause between plotted frames.
+#' @param verbose logical, if TRUE print animation characteristics.
+#' @return Function \code{animator} plots the animation and
+#'   returns an object of class \code{animator}.
+#'
+#'  \code{as.animator} attempts to add the class
+#'  \code{animator} to the argument \code{x}.
+#'
+#'  \code{is.animator} returns \code{TRUE} if \code{x}
+#'  is an \code{animator} object and \code{FALSE} otherwise.
+#'
 #' @seealso \code{\link{as.animator}}, \code{\link{is.animator}}.
 #' @export
 #' @author Andrej Blejec \email{andrej.blejec@nib.si}
@@ -987,7 +1013,7 @@ invisible(as.animator(block,life))
 #' if(interactive())
 #' animator("newplot();tpoints(2,2,5,8,cex=2,pch=16)",life=2,verbose=TRUE)
 #
-animator <- function(block, life=1,fps=25,pause=0.5,verbose=FALSE){
+animator <- function(x, life=1,fps=25,pause=0.5,verbose=FALSE){
 if(is.na(pause)) pause=0.1
 t0 <- Sys.time()
 t <- 0
@@ -999,10 +1025,10 @@ for(t in ts){
     if (dev.interactive()) dev.hold()
 #repeat{
 #while((Sys.time()-t0)<=life) {
-    if(is.expression(block))
-        { eval(block)}
-    if(is.character(block))
-        { eval(parse(text=block))}
+    if(is.expression(x))
+        { eval(x)}
+    if(is.character(x))
+        { eval(parse(text=x))}
     if (dev.interactive()) {
         dev.flush()
         if(!is.na(pause)) Sys.sleep(pause)
@@ -1018,58 +1044,34 @@ if(verbose) cat(
 "\nFrames:",length(ts),
 "\nF/s   :",round(i/as.numeric(Life)),
 "\ndt    :",ts[3]-ts[2],"\n")
-#attr(block,"class") <- "animator"
-#attr(block,"life") <- life
-invisible(as.animator(block,life))
+#attr(x,"class") <- "animator"
+#attr(x,"life") <- life
+invisible(as.animator(x,life))
 }
+#' @rdname animator
+as.animator <- function(x,life=1){
+ class(x) <- "animator"
+ attr(x,"life") <- life
+ invisible(x)
+ }
+## Tests for object class
+#' @rdname animator
+is.animator <- function(x){
+ return(class(x) == "animator")
+ }
+##
 
 ## ----fct plot.animator---------------------------------------------------
-#' Plot Method for Class \code{animator}..
+#' Plot Method for Class \code{animator}.
 #'
 #' Performs and plots the animation of an object.
 #'
-#' @params x character, expression (block) or
-#' object of class \code{animator} containing  graphical timed commands.
-#' @params life numerical, duration of animation.
-#' @params ... additional arguments passed to function \code{animator}.
-#' @return object of class \code{animator}.
+#' @param x character, expression (block) or
+#'   object of class \code{animator} containing  graphical timed commands.
+#' @param life numerical, duration of animation.
+#' @param ... additional arguments passed to function \code{animator}.
+#' @return Object of class \code{animator}.
 #' @seealso \code{\link{as.animator}}, \code{\link{is.animator}}.
-#' @export
-#' @author Andrej Blejec \email{andrej.blejec@nib.si}
-#' @examples
-#' x <- as.animator( 
-#' "newplot();tpoints(2,2,5,8,cex=2,pch=16)", life=2)
-#' print(x)
-#' if(interactive()) plot(x)
-#' ## Equivalent
-#' x <- as.animator(expression({
-#' newplot()
-#' tpoints(2,2,5,8,cex=2,pch=16)
-#' }), 
-#' life=2)
-#' print(x)
-#'if(interactive()) plot(x)
-#
-plot.animator <- function(x,life,...) {
-if(missing(life)) life <- attr(x,"life")
-animator(x,life=life,...)
-}
-
-## ----fct as.animator-----------------------------------------------------
-#' Objects of class \code{animator}.
-#'
-#' Creates or tests for objects of  class \code{animator}.
-#'
-#' @params x character, expression (block) or
-#' object of class \code{animator} containing  graphical timed commands.
-#' @params life numerical, duration of animation.
-#' @return \code{as.animator} attempts to add the class 
-#' \code{animator} to the argument \x}.
-#'
-#' \code{is.animator} returns \code{TRUE} if \code{x}  
-#' is an \code{animator} object and \code{FALSE} otherwise.
-#'
-#' @seealso \code{\link{animator}}.
 #' @export
 #' @author Andrej Blejec \email{andrej.blejec@nib.si}
 #' @examples
@@ -1086,18 +1088,26 @@ animator(x,life=life,...)
 #' print(x)
 #'if(interactive()) plot(x)
 #
-as.animator <- function(x,life=1){
- class(x) <- "animator"
- attr(x,"life") <- life
- return(x)
- }
-## Tests for object class
-is.animator <- function(x){
- return(class(x) == "animator")
- }
-##
+plot.animator <- function(x,life,...) {
+if(missing(life)) life <- attr(x,"life")
+animator(x,life=life,...)
+}
 
 ## ----getChunkopts--------------------------------------------------------
+#' Get Chunk Options.
+#'
+#' Get \code{Sweave} or \code{knitr} programme chunk options.
+#'
+#' @param what character, name of the options to extract.
+#'   If missing, all options will be returned.
+#' @return \code{Sweave} or \code{knitr} chunk option with name
+#'   as declared by argument \code{what}.
+#'   If \code{what} is missing, a list with all chunk options.
+#' @author Andrej Blejec \email{andrej.blejec@nib.si}
+#' @examples
+#' \dontrun{
+#' getChunkopts()
+#' }
 getChunkopts<-function(what){
     if ((n.parents <- length(sys.parents())) >= 3) {
         for (i in seq_len(n.parents) - 1) {
@@ -1118,27 +1128,104 @@ getChunkopts<-function(what){
     return(NULL)
 }
 if(.testing) getChunkopts("label")
+str(getChunkopts())
 
 ## ----includeLatex--------------------------------------------------------
-includeLatex <- function(title="",scale=0.5,poster="last",every=1,fps=25,from="",to="",
-vspace="0pt",other=",controls"){
-file <- paste(getChunkopts()[c("prefix.string","label")],collapse="-")
+#' Include Animated Graphics.
+#'
+#' Provides a line to embed a stack of graphic frames
+#' into PDF file
+#' as animated graphics. It is an interface for LaTeX command
+#' \code{\\animategraphics} from LaTeX package \code{animate}.
+#'
+#' @param title character, obsolete.
+#' @param file character,  the leftmost part of the file name that
+#'   is common to all members of the sequence. If \code{file} is
+#'   equal to \code{NA}, \code{file} will be constructed from the
+#'   code graphics prefix and chunk label. See Note.
+#' @param scale numeric, scaling factor, See Note.
+#' @param poster character or numeric,
+#'   ['first' | <num> | 'last' | 'none']
+#'   Specifies which frame to display and print if
+#'   the animation is not activated. The first frame is shown by default.
+#'   Thus ‘poster’ or ‘poster=first’ need not be explicitly set.
+#'   A frame number <num> may as well be given; <num> is zero-based,
+#'   that is, the first frame has number ‘0’. See Note.
+#' @param every numeric. Build animation from every 'every'th frame only.
+#'   Skipped frames are discarded and not embedded into the document.
+#'   See Note.
+#' @param fps numeric,  the animation frame rate (frames per second).
+#'   Assigning values less than zero results in an error.
+#'   Default is 25. See Note.
+#' @param first numeric, first frame to use in animation.
+#'   Special case is default character value "",
+#'   equivalent to 1. See Note.
+#' @param last numeric, last frame to use in animation.
+#'   Special case is default character value "",
+#'   equivalent to last, unknown frame number. See Note.
+#' @param vspace character, vertical space (LaTeX style)
+#'    for graph positioning. Default is "0pt", no additional space.
+#' @param other character, other parameters separated by coma and
+#'   passed to LaTeX package \code{animate} See Note.
+#' @return prints and invisibly returns the
+#'   LaTeX \code{\\animategraphics} command.
+#' @import knitr
+#' @note Arguments (except \code{title} and
+#'   \code{vspace}) are used to communicate
+#'   with LaTeX package \emph{animate}.
+#'   For details see documentation for the LaTeX package
+#'   \href{https://www.ctan.org/pkg/animate}{animate}.
+#'   Be aware that this is not the same as R package
+#'   \code{\link[animation]{animation}}.
+#'
+#'   When used with Sweave or knitr, the argument \code{file}
+#'   need not to be set and will be conveniently constructed from the
+#'   graphical prefix and chunk label.
+#'
+#'   Argument \code{vspace} can be useful for raising the
+#'   animation image on slides (e.g. \code{beamer}).
+#' @seealso \code{\link{animator}},
+#'   LaTeX package \code{animate} (\url{https://www.ctan.org/pkg/animate}),
+#'   R package \code{animation}
+#'   (\url{https://cran.r-project.org/web/packages/animation)}.
+#' @author Andrej Blejec \email{andrej.blejec@nib.si}
+#' @export
+#' @examples
+#' includeLatex("Test animation")
+#' includeLatex("Test animation",scale=0.5,poster="last",other="loop")
+#' # To include from specific file with stacked frames ( e. g. 0 .. 99 )
+#' # Useful to include animations that were prepared before and can
+#' # be reused in another file
+#' includeLatex(file="./figs/PreparedBefore",first=10,last=50)
+includeLatex <- function(title="",file=NA,scale=0.5,poster="first",every=1,fps=25,first="",last="",
+vspace="0pt",other="controls"){
+# Old way, maybe needed for Sweave ?
+# file <- paste(getChunkopts()[c("prefix.string","label")],collapse="-")
+# New way, works for knitr
+if(fps < 0 ) stop ("Argument fps should be nonnegative")
+if(is.na(file)) file <- knitr::fig_chunk(label = opts_current$get()$params.src, ext = ".pdf")
+print(file)
+#print(getChunkopts())
 #cat("\n\\begin{frame}[fragile] ","\n")
 #cat("\\frametitle{",title,"} ","\n")
 #cat("\\begin{center} ","\n")
 cat(" \\vspace{",vspace,"} ","\n",sep="")
-cat("\\animategraphics[scale=",scale,
+cmd <- paste("\\animategraphics[scale=",scale,
 ",poster=",poster,
 ",every=",every,
-other,
+",",other,
 "]{",fps,
 "}{",file,
-"}{",from,
-"}{",to,
+"}{",first,
+"}{",last,
 "} ","\n",sep="")
+cat(cmd)
+invisible(cmd)
 #cat("\\end{center} ","\n\n\n")
 #cat("\\end{frame} ","\n\n")
 }
-if(.testing) includeLatex("poskusni izpis")
-if(.testing) includeLatex("poskusni izpis",other=",autoplay")
+.testing=TRUE
+#if(.testing) includeLatex("poskusni izpis")
+#if(.testing) includeLatex("poskusni izpis",other="autoplay")
+chunkName <- opts_current$get()$params.src
 

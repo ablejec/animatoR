@@ -2,7 +2,7 @@
 % Please edit documentation in R/animatoR-functions-knitr.R
 \name{tlines}
 \alias{tlines}
-\title{Move lines}
+\title{Move Lines}
 \usage{
 tlines(x0, y0, x1, y1, t, p = 1, when, ...)
 }
@@ -16,19 +16,18 @@ tlines(x0, y0, x1, y1, t, p = 1, when, ...)
 \item{y1}{numeric vector, end y coordinates.}
 
 \item{t}{numeric, homotopy parameter, limited between 0 and 1.
-This parameter can be considered as fraction of time
-duration of the animation.}
+This parameter can be considered as fraction of animation duration time.}
 
 \item{p}{numeric, homotopy power parameter. Defaults to 1.}
 
 \item{when}{numeric vector. This parameter controls
 the times of: entrance, exit, start of movement and, end of movement.}
 
-\item{...}{other parameters passed to \code{\link{lines}}.}
+\item{...}{additional arguments passed to \code{\link{lines}}.}
 }
 \value{
 List with numerical components \code{x} and \code{y} with
-current position
+  current position
 }
 \description{
 Move lines from start to end location
@@ -56,5 +55,7 @@ Andrej Blejec \email{andrej.blejec@nib.si}
 \seealso{
 \code{\link[graphics]{lines}}
 }
+\keyword{aplot}
+\keyword{dynamic}
 \keyword{graphics}
 

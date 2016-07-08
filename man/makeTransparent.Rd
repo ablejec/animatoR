@@ -17,10 +17,10 @@ in which case the input will be transformed into level numbers.}
 }
 \value{
 A character vector with elements of 7 or 9 characters, "#"
-followed by the red, blue, green and optionally alpha
-values in hexadecimal (after rescaling to 0 ... 255).
-The optional alpha values range from 0
-(fully transparent) to 255 (opaque).
+  followed by the red, blue, green and optionally alpha
+  values in hexadecimal (after rescaling to 0 ... 255).
+  The optional alpha values range from 0
+  (fully transparent) to 255 (opaque).
 }
 \description{
 Add transparency parameter (alpha) to colors
@@ -65,8 +65,9 @@ Andrej Blejec \email{andrej.blejec@nib.si}
 }
 \seealso{
 \code{\link[grDevices]{rgb}} for setting colors and
- \code{\link[grDevices]{colors}} for color names.
+  \code{\link[grDevices]{colors}} for color names.
 }
 \keyword{aplot}
-\keyword{dynamic,}
+\keyword{dynamic}
+\keyword{graphics}
 

@@ -5,8 +5,7 @@
 \title{Argument t}
 \arguments{
 \item{t}{numeric, homotopy parameter, limited between 0 and 1.
-This parameter can be considered as fraction of time
-duration of the animation.}
+This parameter can be considered as fraction of animation duration time.}
 }
 \description{
 Homotopy argument

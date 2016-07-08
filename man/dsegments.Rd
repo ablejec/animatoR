@@ -16,22 +16,21 @@ dsegments(x0, y0, x1, y1, t, when, p = 1, ...)
 \item{y1}{numeric vector, end y coordinates.}
 
 \item{t}{numeric, homotopy parameter, limited between 0 and 1.
-This parameter can be considered as fraction of time
-duration of the animation.}
+This parameter can be considered as fraction of animation duration time.}
 
 \item{when}{numeric vector. This parameter controls
 the times of: entrance, exit, start of movement and, end of movement.}
 
 \item{p}{numeric, homotopy power parameter. Defaults to 1.}
 
-\item{...}{other parameters passed to \code{\link{segments}}.}
+\item{...}{additional arguments passed to \code{\link{segments}}.}
 }
 \value{
-List with numerical components \code{x} and \code{y} with
-current position
+List with numerical components \code{x} and \code{y} giving
+  current position.
 }
 \description{
-Draw segments from (x0,y0) to (x1,y1). The effect is
+Draw segments from \eqn{(x_0,y_0)} to \eqn{(x_1,y_1)}. The effect is
 like starting from a point and draw a line.
 }
 \examples{
@@ -63,7 +62,10 @@ points(x1,y1,pch="1")
 Andrej Blejec \email{andrej.blejec@nib.si}
 }
 \seealso{
-\code{\link[graphics]{segments}}
+\code{\link[graphics]{segments}}, \code{\link{tsegments}}
+  for moving segments and \code{\link{darrows}} for drawing arrows.
 }
+\keyword{aplot}
+\keyword{dynamic}
 \keyword{graphics}
 

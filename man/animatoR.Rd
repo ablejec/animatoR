@@ -2,15 +2,40 @@
 % Please edit documentation in R/animatoR-functions-knitr.R
 \name{animator}
 \alias{animator}
-\title{Plot Animated Block of Commands.}
+\alias{as.animator}
+\alias{is.animator}
+\title{Plot Block of Animated Commands.}
 \usage{
-animator(block, life = 1, fps = 25, pause = 0.5, verbose = FALSE)
+animator(x, life = 1, fps = 25, pause = 0.5, verbose = FALSE)
+
+as.animator(x, life = 1)
+
+is.animator(x)
+}
+\arguments{
+\item{x}{character, expression (block) or
+object of class \code{animator} containing  graphical timed commands.}
+
+\item{life}{numerical, duration of animation.}
+
+\item{fps}{numerical, frames per second.}
+
+\item{pause}{numerical, length of the pause between plotted frames.}
+
+\item{verbose}{logical, if TRUE print animation characteristics.}
 }
 \value{
-object of class \code{animator}.
+Function \code{animator} plots the animation and
+  returns an object of class \code{animator}.
+
+ \code{as.animator} attempts to add the class
+ \code{animator} to the argument \code{x}.
+
+ \code{is.animator} returns \code{TRUE} if \code{x}
+ is an \code{animator} object and \code{FALSE} otherwise.
 }
 \description{
-Main function that plots animated sequence of figures.
+Make and plot animated sequence of figures.
 }
 \examples{
 if(interactive())

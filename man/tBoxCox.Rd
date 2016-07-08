@@ -2,14 +2,19 @@
 % Please edit documentation in R/animatoR-functions-knitr.R
 \name{tBoxCox}
 \alias{tBoxCox}
-\title{Interpolate Box-Cox Transformation Parameter \code{lambda}}
+\title{Box-Cox Transformation with Interpolated Parameter \eqn{lambda}}
 \usage{
 tBoxCox(x, lambda0, lambda1 = lambda0, t, when, p)
 }
 \arguments{
+\item{x}{numerical vector.}
+
+\item{lambda0}{numeric, starting value of parameter lambda.}
+
+\item{lambda1}{numeric, end value of parameter lambda.}
+
 \item{t}{numeric, homotopy parameter, limited between 0 and 1.
-This parameter can be considered as fraction of time
-duration of the animation.}
+This parameter can be considered as fraction of animation duration time.}
 
 \item{when}{numeric vector. This parameter controls
 the times of: entrance, exit, start of movement and, end of movement.}
@@ -18,10 +23,11 @@ the times of: entrance, exit, start of movement and, end of movement.}
 }
 \value{
 numerical vector, Box-Cox transformed
-values for current interpolated value of lambda.
+  values for current interpolated value of lambda.
 }
 \description{
-Interpolates Box-Cox transformation parameter \code{lambda}.
+Transform data using the Box-Cox transformation with
+parameter \eqn{lambda} interpolated between start and end value.
 }
 \examples{
 if(interactive())

@@ -7,24 +7,27 @@
 tcex(cex0 = 1, cex1 = 1, t, when, p, area = TRUE)
 }
 \arguments{
+\item{cex0}{numeric vector specifying start symbol size,
+see \code{\link[graphics]{par} cex}.}
+
+\item{cex1}{numeric vector specifying end symbol size,
+see \code{\link[graphics]{par} cex}.}
+
 \item{t}{numeric, homotopy parameter, limited between 0 and 1.
-This parameter can be considered as fraction of time
-duration of the animation.}
+This parameter can be considered as fraction of animation duration time.}
 
 \item{when}{numeric vector. This parameter controls
 the times of: entrance, exit, start of movement and, end of movement.}
 
 \item{p}{numeric, homotopy power parameter. Defaults to 1.}
 
-\item{x0}{numeric vector specifying start symbol size,
-see \code{\link[graphics]{par} cex}.}
-
-\item{x1}{numeric vector specifying end symbol size,
-see \code{\link[graphics]{par} cex}.}
+\item{area}{logical, if TRUE (default) sizes will be treated as
+area. If FALSE, sizes will be considered by diameter.}
 }
 \value{
 A numeric vector giving the amount by which plotting text
-and symbols should be magnified relative to the default \code{cex} value.
+  and symbols should be magnified relative to the
+  default \code{cex} value.
 }
 \description{
 This function interpolates the symbol size
@@ -56,8 +59,10 @@ abline(v=c(2,8),h=5,col="red")
 Andrej Blejec \email{andrej.blejec@nib.si}
 }
 \seealso{
-\code{\link[graphics]{par}} for setting symbol sizes.
+\code{\link[graphics]{par}} for
+  setting symbol sizes (\code{cex}).
 }
 \keyword{aplot}
-\keyword{dynamic,}
+\keyword{dynamic}
+\keyword{graphics}
 

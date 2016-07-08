@@ -16,8 +16,7 @@ darrows(x0, y0, x1, y1, t, when, p = 1, length = 0.125, ...)
 \item{y1}{numeric vector, end y coordinates.}
 
 \item{t}{numeric, homotopy parameter, limited between 0 and 1.
-This parameter can be considered as fraction of time
-duration of the animation.}
+This parameter can be considered as fraction of animation duration time.}
 
 \item{when}{numeric vector. This parameter controls
 the times of: entrance, exit, start of movement and, end of movement.}
@@ -26,14 +25,15 @@ the times of: entrance, exit, start of movement and, end of movement.}
 
 \item{length}{length of the edges of the arrow head (in inches).}
 
-\item{...}{other parameters passed to \code{\link{arrows}}.}
+\item{...}{additional arguments passed to \code{\link{arrows}}.}
 }
 \value{
 List with numerical components \code{x} and \code{y} with
-current position
+  current position.
 }
 \description{
-Draw arrows from start to end location
+Draw arrows from start to end location. The effect is
+like starting from a point and draw an arrow on the screen.
 }
 \examples{
 x0 <- c(0,5,10)
@@ -70,7 +70,10 @@ points(x1,y1,pch="1")
 Andrej Blejec \email{andrej.blejec@nib.si}
 }
 \seealso{
-\code{\link[graphics]{arrows}}
+\code{\link[graphics]{arrows}}, \code{\link{tarrows}}
+  for moving arrows and \code{\link{dsegments}} for drawing segments.
 }
+\keyword{aplot}
+\keyword{dynamic}
 \keyword{graphics}
 

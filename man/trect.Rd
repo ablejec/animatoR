@@ -25,19 +25,18 @@ trect(xleft0, ybottom0, xright0, ytop0, xleft1, ybottom1, xright1, ytop1, t,
 \item{ytop1}{a vector (or scalar) of top y positions.}
 
 \item{t}{numeric, homotopy parameter, limited between 0 and 1.
-This parameter can be considered as fraction of time
-duration of the animation.}
+This parameter can be considered as fraction of animation duration time.}
 
 \item{p}{numeric, homotopy power parameter. Defaults to 1.}
 
 \item{when}{numeric vector. This parameter controls
 the times of: entrance, exit, start of movement and, end of movement.}
 
-\item{...}{other parameters passed to \code{\link{rect}}.}
+\item{...}{additional arguments passed to \code{\link{rect}}.}
 }
 \value{
 List with numerical components \code{x} and \code{y} with
-current position
+  current position
 }
 \description{
 Morf one rectangle to another
@@ -72,8 +71,10 @@ tpolygon(x0,y0,x1,y1,t)
 Andrej Blejec \email{andrej.blejec@nib.si}
 }
 \seealso{
-\code{\link[graphics]{rect}}
+\code{\link[graphics]{rect}} and
+  \code{\link{tpolygon}} for moving a polygon.
 }
 \keyword{aplot}
-\keyword{dynamic,}
+\keyword{dynamic}
+\keyword{graphics}
 

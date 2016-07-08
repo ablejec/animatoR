@@ -4,12 +4,15 @@
 \alias{tmatrix}
 \title{Interpolate Matrix}
 \usage{
-tmatrix(X0, X1 = diag(nrow(X0)), t, when, p)
+tmatrix(x0, x1 = diag(nrow(x0)), t, when, p)
 }
 \arguments{
+\item{x0}{numerical matrix, start matrix}
+
+\item{x1}{numerical matrix, end matrix}
+
 \item{t}{numeric, homotopy parameter, limited between 0 and 1.
-This parameter can be considered as fraction of time
-duration of the animation.}
+This parameter can be considered as fraction of animation duration time.}
 
 \item{when}{numeric vector. This parameter controls
 the times of: entrance, exit, start of movement and, end of movement.}
@@ -23,11 +26,11 @@ Intermediate matrix (numerical).
 Interpolates matrix elements between start and end value.
 }
 \examples{
-X0 <- matrix(c(1,2,3,4),2,2)
-X1 <- matrix(c(11,12,13,14),2,2)
-print(X0)
-print(X1)
-print(h(X0,X1,t=0.3))
+x0 <- matrix(c(1,2,3,4),2,2)
+x1 <- matrix(c(11,12,13,14),2,2)
+print(x0)
+print(x1)
+print(h(x0,x1,t=0.3))
 }
 \author{
 Andrej Blejec \email{andrej.blejec@nib.si}

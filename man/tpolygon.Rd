@@ -16,19 +16,18 @@ tpolygon(x0, y0, x1, y1, t, when, p = 1, ...)
 \item{y1}{numeric vector, end y coordinates.}
 
 \item{t}{numeric, homotopy parameter, limited between 0 and 1.
-This parameter can be considered as fraction of time
-duration of the animation.}
+This parameter can be considered as fraction of animation duration time.}
 
 \item{when}{numeric vector. This parameter controls
 the times of: entrance, exit, start of movement and, end of movement.}
 
 \item{p}{numeric, homotopy power parameter. Defaults to 1.}
 
-\item{...}{other parameters passed to \code{\link{polygon}}.}
+\item{...}{additional arguments passed to \code{\link{polygon}}.}
 }
 \value{
 List with numerical components \code{x} and \code{y} with
-current position
+  current position
 }
 \description{
 Move polygon from start to end location
@@ -53,5 +52,6 @@ Andrej Blejec \email{andrej.blejec@nib.si}
 \code{\link[graphics]{polygon}}
 }
 \keyword{aplot}
-\keyword{dynamic,}
+\keyword{dynamic}
+\keyword{graphics}
 

@@ -8,15 +8,20 @@ trgb(x0, x1 = x0, t, when = c(0, 1), p = 1, alpha0 = 1, alpha1 = 1,
   ...)
 }
 \arguments{
-\item{x0}{numeric or character vector specifying start color,
-see \code{\link[grDevices]{colors}}.}
+\item{x0}{vector specifying start colors or factor.
+Colors can be specified as numbers or
+character strings, see \code{\link{colors}}.
+Factors are also acceptable
+in which case the input will be transformed into level numbers.}
 
-\item{x1}{numeric or character vector specifying end color,
-see \code{\link[grDevices]{colors}}.}
+\item{x1}{vector specifying end colors or factor.
+Colors can be specified as numbers or
+character strings, see \code{\link{colors}}.
+Factors are also acceptable
+in which case the input will be transformed into level numbers.}
 
 \item{t}{numeric, homotopy parameter, limited between 0 and 1.
-This parameter can be considered as fraction of time
-duration of the animation.}
+This parameter can be considered as fraction of animation duration time.}
 
 \item{when}{numeric vector. This parameter controls
 the times of: entrance, exit, start of movement and, end of movement.}
@@ -26,14 +31,14 @@ the times of: entrance, exit, start of movement and, end of movement.}
 \item{alpha0, alpha1}{numeric, transparency value
 \code{\link[grDevices]{rgb}}.}
 
-\item{...}{additional parameters passed to \code{\link[grDevices]{rgb}}.}
+\item{...}{additional arguments passed to \code{\link[grDevices]{rgb}}.}
 }
 \value{
 A character vector with elements of 7 or 9 characters, "#"
-followed by the red, blue, green and optionally alpha
-values in hexadecimal (after rescaling to 0 ... 255).
-The optional alpha values range from 0
-(fully transparent) to 255 (opaque).
+  followed by the red, blue, green and optionally alpha
+  values in hexadecimal (after rescaling to 0 ... 255).
+  The optional alpha values range from 0
+  (fully transparent) to 255 (opaque).
 }
 \description{
 This function interpolates the color between start and end color.
@@ -42,9 +47,8 @@ This function interpolates the color between start and end color.
 if(interactive()){
 animator('
 newplot()
-points(5,5,col=trgb("yellow","blue",t,alpha1=1),
-pch=16,cex=tcex(0,20,t),life=0.5)
-')
+points(5,5,col=trgb("red","blue",t,alpha1=1),pch=16,cex=tcex(80,160,t))',
+life=1)
 }
 }
 \author{
@@ -52,8 +56,11 @@ Andrej Blejec \email{andrej.blejec@nib.si}
 }
 \seealso{
 \code{\link[grDevices]{rgb}} for setting colors and
- \code{\link[grDevices]{colors}} for color names.
+  \code{\link[grDevices]{colors}} for color names.
+
+  See \code{link{makeTransparent}} to add transparency to the colors.
 }
 \keyword{aplot}
-\keyword{dynamic,}
+\keyword{dynamic}
+\keyword{graphics}
 

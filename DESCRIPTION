@@ -4,7 +4,7 @@ Title: Support for Animated Graphics in Base R Graphics
 Version: 0.1.0
 Authors@R: person("Andrej", "Blejec", email = "andrej.blejec@nib.si",
   role = c("aut", "cre"))
-Description: This package enable plotting of graphics elements (e.g. points, lines, segments) in any position between two predefined positions. The central function is animatoR() which takes care about the repeting plotting of graphical elements in different positions. As a simple example, user can define the starting and ending position of a point and animatoR() will produce plots of the point between those positions. This will produce an animated impression of the point moving along the screen.
+Description: This package enable plotting of graphics elements (e.g. points, lines, segments) in any position between two predefined positions. The central function is animator() which takes care about the repeting plotting of graphical elements in different positions. As a simple example, user can define the starting and ending position of a point and animator() will produce plots of the point between those positions. This will produce an animated impression of the point moving along the screen.
 License: GPL-3
 LazyData: TRUE
 Imports: base

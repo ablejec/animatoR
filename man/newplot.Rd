@@ -8,21 +8,21 @@ newplot(xlim = c(0, 10), ylim = c(0, 10), ann = FALSE, axes = FALSE,
   type = "n", asp = 1, stamp = FALSE, ...)
 }
 \arguments{
-\item{xlim}{see \code{\link{plot}}}
+\item{xlim}{see \code{\link{plot}}.}
 
-\item{ylim}{see \code{\link{plot}}}
+\item{ylim}{see \code{\link{plot}}.}
 
-\item{ann}{see \code{\link{plot}}}
+\item{ann}{see \code{\link{plot}}.}
 
-\item{axes}{see \code{\link{plot}}}
+\item{axes}{see \code{\link{plot}}.}
 
-\item{type}{see \code{\link{plot}}}
+\item{type}{see \code{\link{plot}}.}
 
-\item{asp}{aspect ratio, default y/x = 1 see \code{\link{plot.new}}}
+\item{asp}{aspect ratio, default y/x = 1 see \code{\link{plot.new}}.}
 
 \item{stamp}{logical, should time be visible on plots.}
 
-\item{...}{see \code{\link{plot}}}
+\item{...}{additional arguments passed to \code{\link{plot}}.}
 }
 \description{
 Opens a new empty plotting window with default settings
@@ -39,6 +39,7 @@ Andrej Blejec \email{andrej.blejec@nib.si}
 \seealso{
 \code{\link{plot}}
 }
-\keyword{dynamic,}
+\keyword{dynamic}
+\keyword{graphics}
 \keyword{hplot}
 

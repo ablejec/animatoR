@@ -2,7 +2,7 @@
 % Please edit documentation in R/animatoR-functions-knitr.R
 \name{coordParams}
 \alias{coordParams}
-\title{Coordinate arguments}
+\title{Coordinate Arguments}
 \arguments{
 \item{x0}{numeric vector, start x coordinates.}
 

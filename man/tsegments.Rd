@@ -8,17 +8,16 @@ tsegments(x0, y0, x1, y1, x2 = x0, y2 = y0, x3 = x1, y3 = y1, t, when,
   p = 1, fixed = 0, ...)
 }
 \arguments{
-\item{x0}{numeric vector, start x coordinates.}
+\item{x0, x1}{numeric vectors, start segments defining x coordinates.}
 
-\item{y0}{numeric vector, start y coordinates.}
+\item{y0, y1}{numeric vector, start segments defining y coordinates.}
 
-\item{x1}{numeric vector, end x coordinates.}
+\item{x2, x3}{numeric vector, end segments defining x coordinates.}
 
-\item{y1}{numeric vector, end y coordinates.}
+\item{y2, y3}{numeric vector, end segments defining y coordinates.}
 
 \item{t}{numeric, homotopy parameter, limited between 0 and 1.
-This parameter can be considered as fraction of time
-duration of the animation.}
+This parameter can be considered as fraction of animation duration time.}
 
 \item{when}{numeric vector. This parameter controls
 the times of: entrance, exit, start of movement and, end of movement.}
@@ -29,10 +28,10 @@ the times of: entrance, exit, start of movement and, end of movement.}
 start (0, default) - draw from \code{(x0,y0)} to \code{(x1,y1)},
 or end (1) - reverse.}
 
-\item{...}{other parameters passed to \code{\link{segments}}.}
+\item{...}{additional arguments passed to \code{\link{segments}}.}
 }
 \value{
-Numerical matrix with colums defining the current segments.
+Numerical matrix with columns defining the current segments.
 }
 \description{
 Change segment defining positions and plot subsequent segments.
@@ -63,7 +62,10 @@ points(x3,y3,pch="3")
 Andrej Blejec \email{andrej.blejec@nib.si}
 }
 \seealso{
-\code{\link[graphics]{segments}}
+\code{\link[graphics]{segments}}, \code{\link{dsegments}}
+  for drawing segments and \code{\link{tarrows}} for moving arrows.
 }
+\keyword{aplot}
+\keyword{dynamic}
 \keyword{graphics}
 
