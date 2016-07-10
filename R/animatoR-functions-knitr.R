@@ -638,10 +638,10 @@ tarrows <-
 function(x0, y0, x1, y1, x2=x0, y2=y0, x3=x1, y3=y1, t, when, p=1, length=0.125, ...) {
 X <- cbind(x0, y0, x1, y1, x2, y2, x3, y3)
 if(missing(t)) t <- get("t",envir=sys.frame(-1))
-    xt0 <- h(X[,1], X[,3], t,when,p)
-    yt0 <- h(X[,2], X[,4], t,when,p)
-    xt1 <- h(X[,5], X[,7], t,when,p)
-    yt1 <- h(X[,6], X[,8], t,when,p)
+    xt0 <- h(X[,1], X[,5], t,when,p)
+    yt0 <- h(X[,2], X[,6], t,when,p)
+    xt1 <- h(X[,3], X[,7], t,when,p)
+    yt1 <- h(X[,4], X[,8], t,when,p)
 #
     arrows(xt0, yt0, xt1, yt1,...)
     invisible(list(start=list(x=xt0,y=yt0),
