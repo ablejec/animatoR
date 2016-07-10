@@ -41,22 +41,25 @@ Lines are "floating" to final positions.
 x0 <- c(0,4,7)
 y0 <- c(0,7,0)
 x1 <- c(4,0,7)
-y1 <- c(4,7,5)
-x2 <- c(0,4,7)+2
-y2 <- c(0,7,0)-2
-x3 <- c(4,0,7)+2
-y3 <- c(4,7,5)-2
+y1 <- c(2,7,5)
+x2 <- x0+1
+y2 <- y0+2
+x3 <- x1+1
+y3 <- y1+2
 newplot()
-arrows(x0,y0,x1,y1,lty=2)
-arrows(x2,y2,x3,y3,lty=2)
-pos <- tsegments(x0,y0,x1,y1,x2,y2,x3,y3,0.75)
+arrows(x0,y0,x2,y2,lty=2)
+arrows(x1,y1,x3,y3,lty=2)
+segments(x0,y0,x1,y1,col=2)
+pos <- tsegments(x0,y0,x1,y1,x2,y2,x3,y3,0.75,lwd=3)
+segments(x2,y2,x3,y3,col=4)
 pos
 points(pos$start)
 points(pos$end)
-points(x0,y0,pch="0")
-points(x1,y1,pch="1")
-points(x2,y2,pch="2")
-points(x3,y3,pch="3")
+d <- 0.2
+points(x0-d,y0+d,pch="0")
+points(x1+d,y1+d,pch="1")
+points(x2-d,y2+d,pch="2")
+points(x3+d,y3+d,pch="3")
 }
 \author{
 Andrej Blejec \email{andrej.blejec@nib.si}
