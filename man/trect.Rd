@@ -61,11 +61,6 @@ pos <- trect(xleft0, ybottom0, xright0, ytop0,
                 xleft1, ybottom1, xright1, ytop1, t= 0.75)
 str(pos)
 #############
-par(mfrow=c(2,2))
-for( t in seq(0,1,1/3)) {
-newplot()
-tpolygon(x0,y0,x1,y1,t)
-}
 }
 \author{
 Andrej Blejec \email{andrej.blejec@nib.si}

@@ -30,11 +30,15 @@ Transform data using the Box-Cox transformation with
 parameter \eqn{lambda} interpolated between start and end value.
 }
 \examples{
-if(interactive())
-x <- runif(250,1,3)
-animator("newplot(xlim=c(0,max(x)^2),ylim=c(0,1),axes=TRUE,asp=NA);
-xt <- tBoxCox(x,-1,3,t); rug(xt);
-lines(density(xt,add=TRUE))",life=5,verbose=TRUE)
+if(interactive()) {
+ x <- runif(250,1,3)
+ for (t in seq(0,1,length=100)){
+ newplot(xlim=c(0,10),ylim=c(0,1),axes=TRUE,asp=NA)
+ xt <- tBoxCox(x,-1,3,t)
+ rug(xt)
+ lines(density(xt))
+ }
+}
 }
 \author{
 Andrej Blejec \email{andrej.blejec@nib.si}

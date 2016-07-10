@@ -740,11 +740,6 @@ if(missing(t)) t <- get("t",envir=sys.frame(-1))
 #'                 xleft1, ybottom1, xright1, ytop1, t= 0.75)
 #' str(pos)
 #' #############
-#' par(mfrow=c(2,2))
-#' for( t in seq(0,1,1/3)) {
-#' newplot()
-#' tpolygon(x0,y0,x1,y1,t)
-#' }
 trect <- function(xleft0, ybottom0, xright0, ytop0,
                  xleft1, ybottom1, xright1, ytop1, t, p=1, when, ...){
 if(missing(t)) t <- get("t",envir=sys.frame(-1))
@@ -907,11 +902,15 @@ if(missing(t)) t <- get("t",envir=sys.frame(-1))
 #' @export
 #' @author Andrej Blejec \email{andrej.blejec@nib.si}
 #' @examples
-#' if(interactive())
-#' x <- runif(250,1,3)
-#' animator("newplot(xlim=c(0,max(x)^2),ylim=c(0,1),axes=TRUE,asp=NA);
-#' xt <- tBoxCox(x,-1,3,t); rug(xt);
-#' lines(density(xt,add=TRUE))",life=5,verbose=TRUE)
+#' if(interactive()) {
+#'  x <- runif(250,1,3)
+#'  for (t in seq(0,1,length=100)){
+#'  newplot(xlim=c(0,10),ylim=c(0,1),axes=TRUE,asp=NA)
+#'  xt <- tBoxCox(x,-1,3,t)
+#'  rug(xt)
+#'  lines(density(xt))
+#'  }
+#' }
 # homotopy change of parameter lambda in boxcox transform
 tBoxCox <- function(x,lambda0,lambda1=lambda0, t, when ,p){
 BoxCox <- function(x,lambda=1){
@@ -923,10 +922,14 @@ if(missing(t)) t <- get("t",envir=sys.frame(-1))
 #
 if(interactive()) {
  x <- runif(250,1,3)
- animator("newplot(xlim=c(0,max(x)^2),ylim=c(0,1),axes=TRUE,asp=NA);
- xt <- tBoxCox(x,-1,3,t); rug(xt);
- lines(density(xt,add=TRUE))",life=5,verbose=TRUE)
+ for (t in seq(0,1,length=100)){
+ newplot(xlim=c(0,10),ylim=c(0,1),axes=TRUE,asp=NA)
+ xt <- tBoxCox(x,-1,3,t) 
+ rug(xt)
+ lines(density(xt))
+ }
 }
+
 
 ## ------------------------------------------------------------------------
 test <- function(x) {
@@ -1114,7 +1117,7 @@ animator(x,life=life,...)
 #' is_knitr()
 #' }
 is_knitr <- function() {
-"params.src" %in% names(animatoR:::getChunkopts())
+"params.src" %in% names(animatoR::getChunkopts())
 }
 
 
@@ -1154,8 +1157,8 @@ getChunkopts<-function(what){
     if(missing(what)) return(opts_current$get()) else
     return(opts_current$get()[what])
 }
-if(.testing) getChunkopts("label")
-if(.testing) str(getChunkopts())
+#if(.testing) getChunkopts("label")
+#if(.testing) str(getChunkopts())
 
 ## ----includeLatex--------------------------------------------------------
 #' Include Animated Graphics.
@@ -1175,9 +1178,9 @@ if(.testing) str(getChunkopts())
 #'   ['first' | <num> | 'last' | 'none']
 #'   Specifies which frame to display and print if
 #'   the animation is not activated. The first frame is shown by default.
-#'   Thus ‘poster’ or ‘poster=first’ need not be explicitly set.
+#'   Thus 'poster' or 'poster=first' need not be explicitly set.
 #'   A frame number <num> may as well be given; <num> is zero-based,
-#'   that is, the first frame has number ‘0’. See Note.
+#'   that is, the first frame has number '0'. See Note.
 #' @param every numeric. Build animation from every 'every'th frame only.
 #'   Skipped frames are discarded and not embedded into the document.
 #'   See Note.
@@ -1196,7 +1199,7 @@ if(.testing) str(getChunkopts())
 #'   passed to LaTeX package \code{animate} See Note.
 #' @return prints and invisibly returns the
 #'   LaTeX \code{\\animategraphics} command.
-#' @import knitr
+# @import knitr
 #' @note Arguments (except \code{title} and
 #'   \code{vspace}) are used to communicate
 #'   with LaTeX package \emph{animate}.
@@ -1218,12 +1221,14 @@ if(.testing) str(getChunkopts())
 #' @author Andrej Blejec \email{andrej.blejec@nib.si}
 #' @export
 #' @examples
+#' \dontrun{
 #' includeLatex("Test animation")
 #' includeLatex("Test animation",scale=0.5,poster="last",other="loop")
 #' # To include from specific file with stacked frames ( e. g. 0 .. 99 )
 #' # Useful to include animations that were prepared before and can
 #' # be reused in another file
 #' includeLatex(file="./figs/PreparedBefore",first=10,last=50)
+#' }
 includeLatex <- function(title="",file=NA,scale=0.5,poster="first",every=1,fps=25,first="",last="",
 vspace="0pt",other="controls"){
 # Old way, maybe needed for Sweave ?
@@ -1232,8 +1237,9 @@ vspace="0pt",other="controls"){
 if(fps < 0 ) stop ("Argument fps should be nonnegative")
 if(is.na(file)) {
 if(is_knitr()) {
-file <- knitr::fig_chunk(
-label = opts_current$get()$label, ext = "") } else {
+file <- fig_chunk(
+label = opts_current$get()$label, ext = "") 
+} else {
 file <- paste(getChunkopts()[c("prefix.string","label")],collapse="-")
 }
 }
@@ -1260,6 +1266,6 @@ invisible(cmd)
 .testing=TRUE
 #if(.testing) includeLatex("poskusni izpis")
 #if(.testing) includeLatex("poskusni izpis",other="autoplay")
-(chunkName <- opts_current$get()$params.src)
+#(chunkName <- opts_current$get()$params.src)
 #includeLatex("Test animation")
 

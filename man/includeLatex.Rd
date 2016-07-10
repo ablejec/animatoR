@@ -22,9 +22,9 @@ code graphics prefix and chunk label. See Note.}
 ['first' | <num> | 'last' | 'none']
 Specifies which frame to display and print if
 the animation is not activated. The first frame is shown by default.
-Thus ‘poster’ or ‘poster=first’ need not be explicitly set.
+Thus 'poster' or 'poster=first' need not be explicitly set.
 A frame number <num> may as well be given; <num> is zero-based,
-that is, the first frame has number ‘0’. See Note.}
+that is, the first frame has number '0'. See Note.}
 
 \item{every}{numeric. Build animation from every 'every'th frame only.
 Skipped frames are discarded and not embedded into the document.
@@ -75,12 +75,14 @@ Arguments (except \code{title} and
   animation image on slides (e.g. \code{beamer}).
 }
 \examples{
+\dontrun{
 includeLatex("Test animation")
 includeLatex("Test animation",scale=0.5,poster="last",other="loop")
 # To include from specific file with stacked frames ( e. g. 0 .. 99 )
 # Useful to include animations that were prepared before and can
 # be reused in another file
 includeLatex(file="./figs/PreparedBefore",first=10,last=50)
+}
 }
 \author{
 Andrej Blejec \email{andrej.blejec@nib.si}
