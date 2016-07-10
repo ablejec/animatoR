@@ -1,4 +1,7 @@
 [![Build Status](https://travis-ci.org/ablejec/animatoR.svg?branch=master)](https://travis-ci.org/ablejec/animatoR)
+[![Coverage Status](https://img.shields.io/codecov/c/github/ablejec/amisc/master.svg)](https://codecov.io/github/ablejec/animatoR?branch=master)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/amisc)](http://cran.r-project.org/package=animatoR)
+
 # Package `animatoR`
 Support for Animated Graphics in Base R Graphics
 
