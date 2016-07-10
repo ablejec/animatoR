@@ -1042,13 +1042,14 @@ Life <- Sys.time()-t0
 if(verbose) cat(
 "\nTime  :",Life,
 "\nFrames:",length(ts),
-"\nF/s   :",round(i/as.numeric(Life)),
+"\nF/s   :",round(length(ts)/as.numeric(Life)),
 "\ndt    :",ts[3]-ts[2],"\n")
 #attr(x,"class") <- "animator"
 #attr(x,"life") <- life
 invisible(as.animator(x,life))
 }
 #' @rdname animator
+#' @export
 as.animator <- function(x,life=1){
  class(x) <- "animator"
  attr(x,"life") <- life
@@ -1056,6 +1057,7 @@ as.animator <- function(x,life=1){
  }
 ## Tests for object class
 #' @rdname animator
+#' @export
 is.animator <- function(x){
  return(class(x) == "animator")
  }
@@ -1093,6 +1095,23 @@ if(missing(life)) life <- attr(x,"life")
 animator(x,life=life,...)
 }
 
+## ------------------------------------------------------------------------
+#' Test if \code{knitr} is Active
+#'
+#' Are you \code{knitr}?
+#'
+#' @return value \code{TRUE} if \code{knitr} engine is active,
+#'   \code{FALSE} otherwise
+#' @author Andrej Blejec \email{andrej.blejec@nib.si}
+#' @examples
+#' \dontrun{
+#' is_knitr()
+#' }
+is_knitr <- function() {
+"params.src" %in% names(animatoR:::getChunkopts())
+}
+
+
 ## ----getChunkopts--------------------------------------------------------
 #' Get Chunk Options.
 #'
@@ -1109,7 +1128,8 @@ animator(x,life=life,...)
 #' getChunkopts()
 #' }
 getChunkopts<-function(what){
-    if ((n.parents <- length(sys.parents())) >= 3) {
+    in.sweave <<-FALSE
+    if ((n.parents <- length(sys.parents())) > 3) {
         for (i in seq_len(n.parents) - 1) {
 #       cat(1,ls(envir = sys.frame(i)),"\n\n")
             if ("chunkopts" %in% ls(envir = sys.frame(i))) {
@@ -1125,10 +1145,11 @@ getChunkopts<-function(what){
             }
         }
     }
-    return(NULL)
+    if(missing(what)) return(opts_current$get()) else
+    return(opts_current$get()[what])
 }
 if(.testing) getChunkopts("label")
-str(getChunkopts())
+if(.testing) str(getChunkopts())
 
 ## ----includeLatex--------------------------------------------------------
 #' Include Animated Graphics.
@@ -1203,7 +1224,13 @@ vspace="0pt",other="controls"){
 # file <- paste(getChunkopts()[c("prefix.string","label")],collapse="-")
 # New way, works for knitr
 if(fps < 0 ) stop ("Argument fps should be nonnegative")
-if(is.na(file)) file <- knitr::fig_chunk(label = opts_current$get()$params.src, ext = ".pdf")
+if(is.na(file)) {
+if(is_knitr()) {
+file <- knitr::fig_chunk(
+label = opts_current$get()$label, ext = "") } else {
+file <- paste(getChunkopts()[c("prefix.string","label")],collapse="-")
+}
+}
 print(file)
 #print(getChunkopts())
 #cat("\n\\begin{frame}[fragile] ","\n")
@@ -1227,5 +1254,6 @@ invisible(cmd)
 .testing=TRUE
 #if(.testing) includeLatex("poskusni izpis")
 #if(.testing) includeLatex("poskusni izpis",other="autoplay")
-chunkName <- opts_current$get()$params.src
+(chunkName <- opts_current$get()$params.src)
+includeLatex("Test animation")
 

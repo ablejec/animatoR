@@ -1,0 +1,17 @@
+---
+title: "Test animatoR"
+author: "A. Blejec"
+date: "08 julij 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(animatoR)
+animator("newplot();tpoints(2,2,5,8,cex=2,pch=16)",life=2,verbose=TRUE)
+
+```
+
