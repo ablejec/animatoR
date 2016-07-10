@@ -1,4 +1,4 @@
-
+[![Build Status](https://travis-ci.org/ablejec/animatoR.svg?branch=master)](https://travis-ci.org/ablejec/animatoR)
 # Package `animatoR`
 Support for Animated Graphics in Base R Graphics
 
