@@ -4,6 +4,7 @@
 ^\\doc\\$
 ^cran-comments\.md$
 ^\.travis\.yml$
+^\.git.*$
 ^readme\.md$
 ^Rplots\.pdf$
 
