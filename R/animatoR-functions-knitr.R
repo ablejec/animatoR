@@ -924,7 +924,7 @@ if(interactive()) {
  x <- runif(250,1,3)
  for (t in seq(0,1,length=100)){
  newplot(xlim=c(0,10),ylim=c(0,1),axes=TRUE,asp=NA)
- xt <- tBoxCox(x,-1,3,t) 
+ xt <- tBoxCox(x,-1,3,t)
  rug(xt)
  lines(density(xt))
  }
@@ -960,39 +960,6 @@ tpoints(2, 2, 9,5, t,pch=16,cex=2,trace=TRUE)
 print(i)
 }
 }
-
-## ----fct animator0-------------------------------------------------------
-animator0 <- function(block, dt =.dt){
-if(is.expression(block))
-for(t in seq(0,1,dt) ){ eval(block)}
-if(is.character(block))
-for(t in seq(0,1,dt) ){ eval(parse(text=block))}
-attr(block,"class") <- "animator"
-invisible(block)
-}
-
-## ----animator1-----------------------------------------------------------
-animator1 <- function(block, dt =.dt , life=1,fps=25,verbose=FALSE){
-t0 <- Sys.time()
-t <- 0
-i <- 0
-life <- life+0.2
-while((Sys.time()-t0)<=life) {
-    if(is.expression(block))
-        { eval(block)}
-    if(is.character(block))
-        { eval(parse(text=block))}
-    i <- i+1
-    if(!is.na(fps)) Sys.sleep(1/fps)
-    t <- min(1,as.numeric((Sys.time()-t0))/life)
-}
-Life <- Sys.time()-t0
-if(verbose) cat("Time  :",Life,"\nFrames:",i,"\nF/s   :",round(i/as.numeric(Life)),"\n")
-#attr(block,"class") <- "animator"
-#attr(block,"life") <- life
-invisible(as.animator(block,life))
-}
-
 
 ## ----fct animator--------------------------------------------------------
 #' Plot Block of Animated Commands.
@@ -1238,7 +1205,7 @@ if(fps < 0 ) stop ("Argument fps should be nonnegative")
 if(is.na(file)) {
 if(is_knitr()) {
 file <- fig_chunk(
-label = opts_current$get()$label, ext = "") 
+label = opts_current$get()$label, ext = "")
 } else {
 file <- paste(getChunkopts()[c("prefix.string","label")],collapse="-")
 }
