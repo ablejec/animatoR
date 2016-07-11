@@ -13,6 +13,7 @@ The result is an animated impression of the point moving along the screen.
 
 ## Installation
 
+**Note:* package is under development, some things might not work or will be changed!
 
 ```R
 # install.packages("devtools")`
