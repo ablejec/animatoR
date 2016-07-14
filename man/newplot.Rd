@@ -29,14 +29,13 @@ Opens a new empty plotting window with default settings
  (0, 10) x (0, 10), no axes nor labels.
 }
 \note{
-Some additional arguments will not wok (for example argument 
+Some additional arguments will not wok (for example argument
   \code{bty} are overriden by \code{ann}. You have to use \code{box}
   command to produce the box around the plot).
 }
 \examples{
 newplot()
 points(0.5,0.5)
-newplot(bty="o")
 }
 \author{
 Andrej Blejec \email{andrej.blejec@nib.si}
