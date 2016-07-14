@@ -81,6 +81,12 @@ NULL
 #' @param axes see \code{\link{plot}}.
 #' @param type see \code{\link{plot}}.
 #' @param asp aspect ratio, default y/x = 1 see \code{\link{plot.new}}.
+#' @param bty A character string which determined the type of box which 
+#' is drawn about plots. If bty is one of "n" (the default), 
+#' "o", "l", "7", "c", "u", or "]" the resulting box resembles the
+#' corresponding upper case letter. 
+#' A value of "n" (default) suppresses the box (see \code{\link{par}}
+#' for usual default ("o").
 #' @param stamp logical, should time be visible on plots.
 #' @param ... additional arguments passed to \code{\link{plot}}.
 #' @return NULL
@@ -95,7 +101,7 @@ NULL
 #' points(0.5,0.5)
 #'
 newplot <-
-function(xlim=c(0,10),ylim=c(0,10),ann=FALSE,axes=FALSE,type="n",asp=1,
+function(xlim=c(0,10),ylim=c(0,10),ann=FALSE,axes=FALSE,type="n",asp=1,bty="n",
 stamp=FALSE,...){
 plot(0,0,xlim=xlim,ylim=ylim,ann=ann,axes=axes,type=type,asp=asp,...)
 
