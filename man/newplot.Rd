@@ -5,7 +5,7 @@
 \title{Open New Empty Plotting Window}
 \usage{
 newplot(xlim = c(0, 10), ylim = c(0, 10), ann = FALSE, axes = FALSE,
-  type = "n", asp = 1, bty = "n", stamp = FALSE, ...)
+  type = "n", asp = 1, stamp = FALSE, ...)
 }
 \arguments{
 \item{xlim}{see \code{\link{plot}}.}
@@ -20,13 +20,6 @@ newplot(xlim = c(0, 10), ylim = c(0, 10), ann = FALSE, axes = FALSE,
 
 \item{asp}{aspect ratio, default y/x = 1 see \code{\link{plot.new}}.}
 
-\item{bty}{A character string which determined the type of box which 
-is drawn about plots. If bty is one of "n" (the default), 
-"o", "l", "7", "c", "u", or "]" the resulting box resembles the
-corresponding upper case letter. 
-A value of "n" (default) suppresses the box (see \code{\link{par}}
-for usual default ("o").}
-
 \item{stamp}{logical, should time be visible on plots.}
 
 \item{...}{additional arguments passed to \code{\link{plot}}.}
@@ -35,10 +28,15 @@ for usual default ("o").}
 Opens a new empty plotting window with default settings
  (0, 10) x (0, 10), no axes nor labels.
 }
+\note{
+Some additional arguments will not wok (for example argument 
+  \code{bty} are overriden by \code{ann}. You have to use \code{box}
+  command to produce the box around the plot).
+}
 \examples{
 newplot()
 points(0.5,0.5)
-
+newplot(bty="o")
 }
 \author{
 Andrej Blejec \email{andrej.blejec@nib.si}
