@@ -682,6 +682,7 @@ if(missing(t)) t <- get("t",envir=sys.frame(-1))
 #' newplot()
 #' tpolygon(x0,y0,x1,y1,t)
 #' }
+
 tpolygon <-
 function(x0, y0, x1, y1, t,when,p=1,...) {
 X <- cbind(x0,y0,x1,y1)
@@ -880,7 +881,7 @@ if(missing(t)) t <- get("t",envir=sys.frame(-1))
 # homotopy change of matrix
 # set size po maintain proportional areas
 # Warning: swapped arguments x0 and x1
-tmatrix <- function(x0, x1=diag(nrow(x0)), t, when, p){
+tmatrix <- function(x0, x1=diag(nrow(x0)), t, when, p = 1){
 if(missing(t)) t <- get("t",envir=sys.frame(-1))
     invisible(h(x0,x1,t,when, p))
 }
@@ -967,7 +968,7 @@ print(i)
 #' Make and plot animated sequence of figures.
 #'
 #' @aliases as.animator is.animator
-#' @param x character, expression (block) or
+#' @param block,x character, expression or
 #'   object of class \code{animator} containing  graphical timed commands.
 #' @param life numerical, duration of animation.
 #' @param fps numerical, frames per second.
@@ -989,7 +990,7 @@ print(i)
 #' if(interactive())
 #' animator("newplot();tpoints(2,2,5,8,cex=2,pch=16)",life=2,verbose=TRUE)
 #
-animator <- function(x, life=1,fps=25,pause=0.5,verbose=FALSE){
+animator <- function(block, life=1,fps=25,pause=0.5,verbose=FALSE){
 if(is.na(pause)) pause=0.1
 t0 <- Sys.time()
 t <- 0
@@ -1001,10 +1002,10 @@ for(t in ts){
     if (dev.interactive()) dev.hold()
 #repeat{
 #while((Sys.time()-t0)<=life) {
-    if(is.expression(x))
-        { eval(x)}
-    if(is.character(x))
-        { eval(parse(text=x))}
+    if(is.expression(block))
+        { eval(block)}
+    if(is.character(block))
+        { eval(parse(text=block))}
     if (dev.interactive()) {
         dev.flush()
         if(!is.na(pause)) Sys.sleep(pause)
@@ -1020,9 +1021,9 @@ if(verbose) cat(
 "\nFrames:",length(ts),
 "\nF/s   :",round(length(ts)/as.numeric(Life)),
 "\ndt    :",ts[3]-ts[2],"\n")
-#attr(x,"class") <- "animator"
-#attr(x,"life") <- life
-invisible(as.animator(x,life))
+#attr(block,"class") <- "animator"
+#attr(block,"life") <- life
+invisible(as.animator(block,life))
 }
 #' @rdname animator
 #' @export
@@ -1079,12 +1080,13 @@ animator(x,life=life,...)
 #' @return value \code{TRUE} if \code{knitr} engine is active,
 #'   \code{FALSE} otherwise
 #' @author Andrej Blejec \email{andrej.blejec@nib.si}
+#' @export
 #' @examples
 #' \dontrun{
 #' is_knitr()
 #' }
 is_knitr <- function() {
-"params.src" %in% names(animatoR::getChunkopts())
+"params.src" %in% names(getChunkopts())
 }
 
 
@@ -1099,7 +1101,9 @@ is_knitr <- function() {
 #'   as declared by argument \code{what}.
 #'   If \code{what} is missing, a list with all chunk options.
 #' @author Andrej Blejec \email{andrej.blejec@nib.si}
+#' @export
 #' @examples
+
 #' \dontrun{
 #' getChunkopts()
 #' }

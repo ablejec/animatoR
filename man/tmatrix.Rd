@@ -4,7 +4,7 @@
 \alias{tmatrix}
 \title{Interpolate Matrix}
 \usage{
-tmatrix(x0, x1 = diag(nrow(x0)), t, when, p)
+tmatrix(x0, x1 = diag(nrow(x0)), t, when, p = 1)
 }
 \arguments{
 \item{x0}{numerical matrix, start matrix}

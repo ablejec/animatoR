@@ -6,14 +6,14 @@
 \alias{is.animator}
 \title{Plot Block of Animated Commands.}
 \usage{
-animator(x, life = 1, fps = 25, pause = 0.5, verbose = FALSE)
+animator(block, life = 1, fps = 25, pause = 0.5, verbose = FALSE)
 
 as.animator(x, life = 1)
 
 is.animator(x)
 }
 \arguments{
-\item{x}{character, expression (block) or
+\item{block, x}{character, expression or
 object of class \code{animator} containing  graphical timed commands.}
 
 \item{life}{numerical, duration of animation.}
