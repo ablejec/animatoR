@@ -128,7 +128,7 @@ round(get("t",envir=sys.frame(-1)),2)),adj=0,xpd=TRUE)
 #' h(1,c(2,3),.5)
 #'
 h <-
-function(x0, x1, t, when, p=1) {
+function(x0, x1, t=0, when, p=1) {
 # get timing parameters
 start <- 0
 end <- 1
@@ -166,7 +166,6 @@ for(t in tt) points(t,h(0,1,t,c(0.25,0.5,.2),p=2),col=2)
 for(t in tt) points(t,h(0,1,t,c(0.25,0.5,.2),p=1/2),col=2)
 par(oldpar)
 }
-
 
 ## ------------------------------------------------------------------------
 checkX <- function(...){
@@ -990,8 +989,21 @@ print(i)
 #' @examples
 #' if(interactive())
 #' animator("newplot();tpoints(2,2,5,8,cex=2,pch=16)",life=2,verbose=TRUE)
+#' # block 
+#' animator({
+#'   newplot()
+#'   abline(h=c(1,8),v=c(1,8))
+#'  tpoints(1,1,8,8,pch=16,cex=2)
+#' })
+#' t <- 0
+#' as.animator({
+#'   newplot()
+#'   abline(h=c(1,8),v=c(1,8))
+#'  tpoints(1,1,8,8,pch=16,cex=2)
+#' })
 #
 animator <- function(block, life=1,fps=25,pause=0.5,verbose=FALSE){
+block <- deparse(substitute(block))
 if(is.na(pause)) pause=0.1
 t0 <- Sys.time()
 t <- 0
@@ -1029,8 +1041,12 @@ invisible(as.animator(block,life))
 #' @rdname animator
 #' @export
 as.animator <- function(x,life=1){
+t <- 0
+if(!is.animator(x)) {
+ x <- deparse(substitute(x))
  class(x) <- "animator"
  attr(x,"life") <- life
+ }
  invisible(x)
  }
 ## Tests for object class

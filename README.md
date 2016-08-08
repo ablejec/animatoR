@@ -2,7 +2,7 @@
 [![Coverage Status](https://img.shields.io/codecov/c/github/ablejec/animatoR/master.svg)](https://codecov.io/github/ablejec/animatoR?branch=master)
 [![codecov](https://codecov.io/gh/ablejec/animatoR/branch/master/graph/badge.svg)](https://codecov.io/gh/ablejec/animatoR)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/animatoR)](http://cran.r-project.org/package=animatoR)
-
+[![tag](https://img.shields.io/github/tag/ablejec/animatoR.svg)](https://github.com/ablejec/animatoR/releases)
 # Package `animatoR`
 Support for Animated Graphics in Base R Graphics
 

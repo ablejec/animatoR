@@ -4,7 +4,7 @@
 \alias{h}
 \title{Homotopy Function}
 \usage{
-h(x0, x1, t, when, p = 1)
+h(x0, x1, t = 0, when, p = 1)
 }
 \arguments{
 \item{x0}{numeric vector of start values.}

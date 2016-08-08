@@ -40,6 +40,18 @@ Make and plot animated sequence of figures.
 \examples{
 if(interactive())
 animator("newplot();tpoints(2,2,5,8,cex=2,pch=16)",life=2,verbose=TRUE)
+# block 
+animator({
+  newplot()
+  abline(h=c(1,8),v=c(1,8))
+ tpoints(1,1,8,8,pch=16,cex=2)
+})
+t <- 0
+as.animator({
+  newplot()
+  abline(h=c(1,8),v=c(1,8))
+ tpoints(1,1,8,8,pch=16,cex=2)
+})
 }
 \author{
 Andrej Blejec \email{andrej.blejec@nib.si}
