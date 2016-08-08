@@ -19,7 +19,7 @@ The result is an animated impression of the point moving along the screen.
 
 **Note:** package is under development, some things might not work or will be changed!
 
-```R
+```{r,eval=FALSE}
 if (!require(devtools)) {
     install.packages("devtools")
     require(devtools)
