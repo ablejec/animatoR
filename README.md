@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/ablejec/animatoR.svg?branch=master)](https://travis-ci.org/ablejec/animatoR)
-[![Coverage Status](https://img.shields.io/codecov/c/github/ablejec/animatoR/master.svg)](https://codecov.io/github/ablejec/animatoR?branch=master)
 [![tag](https://img.shields.io/github/tag/ablejec/animatoR.svg)](https://github.com/ablejec/animatoR/releases)
+[![Coverage Status](https://img.shields.io/codecov/c/github/ablejec/animatoR/master.svg)](https://codecov.io/github/ablejec/animatoR?branch=master)
 [![codecov](https://codecov.io/gh/ablejec/animatoR/branch/master/graph/badge.svg)](https://codecov.io/gh/ablejec/animatoR)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/animatoR)](http://cran.r-project.org/package=animatoR)
 [![In Progress](https://badge.waffle.io/ablejec/animatoR.svg?label=In Progress&title=In Progress)](http://waffle.io/ablejec/animatoR) 
