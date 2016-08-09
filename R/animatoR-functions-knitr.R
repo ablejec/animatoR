@@ -989,18 +989,18 @@ print(i)
 #' @examples
 #' if(interactive())
 #' animator("newplot();tpoints(2,2,5,8,cex=2,pch=16)",life=2,verbose=TRUE)
-#' # block 
+#' # block
 #' animator({
 #'   newplot()
 #'   abline(h=c(1,8),v=c(1,8))
 #'  tpoints(1,1,8,8,pch=16,cex=2)
 #' })
 #' t <- 0
-#' as.animator({
+#' as.animator('{
 #'   newplot()
 #'   abline(h=c(1,8),v=c(1,8))
 #'  tpoints(1,1,8,8,pch=16,cex=2)
-#' })
+#' }')
 #
 animator <- function(block, life=1,fps=25,pause=0.5,verbose=FALSE){
 block <- deparse(substitute(block))

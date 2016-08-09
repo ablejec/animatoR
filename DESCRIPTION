@@ -12,5 +12,6 @@ Imports: base,
 RoxygenNote: 5.0.1
 Suggests: animation,
     knitr,
-    rmarkdown
+    rmarkdown,
+    covr
 VignetteBuilder: knitr
