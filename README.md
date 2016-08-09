@@ -19,7 +19,7 @@ The result is an animated impression of the point moving along the screen.
 
 ## Installation
 
-**Note:** package is under development, some things might be changed!
+**Note:** package is under development, some things might change!
 
 ```{r,eval=FALSE}
 if (!require(devtools)) {
