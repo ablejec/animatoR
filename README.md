@@ -12,7 +12,7 @@
 Support for Animated Graphics in Base R Graphics
 
 Enable plotting of graphics elements (e.g. points, lines, segments) in any position between two predefined positions. 
-The central function is `animator()` which takes care about the repeting plotting of graphical elements in different positions. 
+The central function `animator()` takes care about the repeated plotting of graphical elements at different positions. 
 As a simple example, user can define the starting and ending position of a point and `animator()` 
 will produce plots of the point between those positions. 
 The result is an animated impression of the point moving along the screen.
