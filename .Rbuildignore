@@ -6,5 +6,7 @@
 ^\.travis\.yml$
 ^\.git.*$
 ^readme\.md$
+^readme\.rmd$
 ^Rplots\.pdf$
-
+^appveyor\.yml$
+^codecov\.yml$
