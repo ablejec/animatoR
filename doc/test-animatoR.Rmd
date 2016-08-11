@@ -2,16 +2,17 @@
 title: "Test animatoR"
 author: "A. Blejec"
 date: "08 julij 2016"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
+```{r,fig.show='animate',aniopts='controls,loop,autoplay'}
 library(animatoR)
 animator("newplot();tpoints(2,2,5,8,cex=2,pch=16)",life=2,verbose=TRUE)
-
 ```
 
