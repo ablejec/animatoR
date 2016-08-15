@@ -28,11 +28,12 @@ Here are the chunk options used for this example
 > {fig.show='animate',interval=0.01,results="asis"}
 
 
-```{r fig.show='animate',interval=0.01,results="asis"}
+```{r fig.show='animate',interval=0.01,results="asis",eval=FALSE}
 animator(
 "newplot();box();tpoints(2,2,8,8,cex=2,pch=16)"
 ,life=2)
 ```
+(Note: chunk is not evaluated, can not set Travis-ci to use ffmpeg properly).
 
 To view and run the animation, you have to open the HTML file in a browser.
 
