@@ -1,8 +1,12 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 language: R
-sudo: false
+sudo: required
 cache: packages
+
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y ffmpeg
 
 r_packages:
   - covr
