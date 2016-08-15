@@ -41,7 +41,6 @@ To view and run the animation, you have to open the HTML file in a browser.
 ## SessionInfo
 
 ```{r sessionInfo,echo=FALSE}
-cat(win.version())
 sessionInfo()
 cat("Project path:`",dirname(getwd()),"`\\\\\n")
 ```
