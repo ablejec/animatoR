@@ -999,11 +999,11 @@ print(i)
 #' as.animator('{
 #'   newplot()
 #'   abline(h=c(1,8),v=c(1,8))
-#'  tpoints(1,1,8,8,pch=16,cex=2)
+#'   tpoints(1,1,8,8,pch=16,cex=2)
 #' }')
 #
 animator <- function(block, life=1,fps=25,pause=0.5,verbose=FALSE){
-block <- deparse(substitute(block))
+#block <- deparse(substitute(block))
 if(is.na(pause)) pause=0.1
 t0 <- Sys.time()
 t <- 0
@@ -1043,7 +1043,7 @@ invisible(as.animator(block,life))
 as.animator <- function(x,life=1){
 t <- 0
 if(!is.animator(x)) {
- x <- deparse(substitute(x))
+ if(!is.character(x)) x <- deparse(substitute(x))
  class(x) <- "animator"
  attr(x,"life") <- life
  }

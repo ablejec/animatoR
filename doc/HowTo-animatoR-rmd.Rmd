@@ -1,23 +1,31 @@
 ---
-title: "How to use animatoR with Rmarkdown "
-author: "Andrej Blejec"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{HowTo-use-animatoR-with-Rmarkdown}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+title: "HowTo Use **animatoR** in **Rmarkdown**"
+author: "A. Blejec"
+date: "13 August 2016"
+output:
+  html_document: default
+  pdf_document: default
 ---
+
+```{r include=FALSE}
+library(knitr)
+opts_chunk$set(
+fig.path='./figs/kn',concordance=TRUE
+)
+```
+
+
 
 ```{r initialize,echo=FALSE,results='hide'}
 options(width=70)
 library(animatoR)
+library(knitr)
 ```
 
 This is a short example to show how to embed `animatoR` based animations
 into Rmarkdown generated HTML file.
 
-For embedding one can use the figure chunk option
+For embedding we can use the figure chunk option
 `fig.show='animate'`.
 Option `interval` controls the smoothness of
 the replay.
@@ -44,3 +52,5 @@ cat(win.version())
 sessionInfo()
 cat("Project path:`",dirname(getwd()),"`\\\\\n")
 ```
+
+

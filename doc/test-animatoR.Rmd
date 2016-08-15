@@ -11,7 +11,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r,fig.show='animate',aniopts='controls,loop,autoplay'}
+```{r fig1,fig.show='animate'}
 library(animatoR)
 animator("newplot();tpoints(2,2,5,8,cex=2,pch=16)",life=2,verbose=TRUE)
 ```
