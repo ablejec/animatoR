@@ -8,7 +8,7 @@
 
 [![DOI](https://zenodo.org/badge/5761/ablejec/animatoR.svg)](https://zenodo.org/badge/latestdoi/5761/ablejec/animatoR)
 
-# Package `animatoR`
+# Package *animatoR*
 Support for Animated Graphics in Base R Graphics
 
 Enable plotting of graphics elements (e.g. points, lines, segments) in any position between two predefined positions. 
