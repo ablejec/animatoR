@@ -30,4 +30,4 @@ devtools::install_github("ablejec/animatoR")
 ```
 
 ## Website
-https://ablejec.github.io/animatoR/
+[https://ablejec.github.io/animatoR/](https://ablejec.github.io/animatoR/)
