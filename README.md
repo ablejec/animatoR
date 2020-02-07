@@ -31,7 +31,7 @@ devtools::install_github("ablejec/animatoR")
 
 Move one point across the screen:
 
-```{r}
+```{r, eval=FALSE}
 require(animatoR)
 # Move one point across the screen
 cmd <- "newplot(stamp=TRUE)
