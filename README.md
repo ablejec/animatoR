@@ -27,6 +27,17 @@ if (!require(devtools)) {
 }
 devtools::install_github("ablejec/animatoR")
 ```
+## Minimal example
+
+Move one point acros the screen:
+
+```{r}
+require(animatoR)
+# Move one point acros the screen
+cmd <- "newplot(stamp=TRUE)
+	tpoints(0,0,5,10,trace=TRUE,pch=16,cex=1.5)"
+animator(cmd)
+```
 
 ## Website
 [https://ablejec.github.io/animatoR/](https://ablejec.github.io/animatoR/)
